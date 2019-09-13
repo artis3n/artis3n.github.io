@@ -1,16 +1,14 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: Musings and research on cryptography and software development.
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+I am a cyber security engineer performing penetration tests and writing secure software. This means the posts will
+    usually be on cyber security-related topics or software engineering. I am passionate about cryptography so there will be a good number of crypto posts as well.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+I have no current plan on a regular cadence for posts; as I come across topics that interest me, I will dive into them and write up what I learn. There are also topics that I would like a chance at explaining, so posts will contain a mix of 'teaching' articles as well.
 
-What else do you need?
+Thanks!
 
-### my history
-
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+- Artis3n
