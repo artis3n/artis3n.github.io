@@ -88,7 +88,7 @@ can write data to your page. These resources cannot typically read data from you
 
 #### `about:blank` and `javascript:`
 
-Note that scripts executed from pages with an `about:blank` or `javascript:` URL inherit the origin of the document that opened the URL. This means that [Cross-Site Scripting][xss] (XSS) wiB*BWvJvQQ7azwM87Zo93037Wxl9k@bll execute with the inherited origin of the page it is running on. Also, code that opens a new tab/window can then write content into it, as the new tab/window inherits the origin of the page that created it. The former is bad. The latter can be "business as usual," but is often abused by malicious ads and adware (ALERT! YOUR COMPUTER HAS 37 VIRUSES CLICK HERE FOR A FREE SCAN!).
+Note that scripts executed from pages with an `about:blank` or `javascript:` URL inherit the origin of the document that opened the URL. This means that [Cross-Site Scripting][xss] (XSS) execute with the inherited origin of the page it is running on. Also, code that opens a new tab/window can then write content into it, as the new tab/window inherits the origin of the page that created it. The former is bad. The latter can be "business as usual," but is often abused by malicious ads and adware (ALERT! YOUR COMPUTER HAS 37 VIRUSES CLICK HERE FOR A FREE SCAN!).
 
 > ### Let's be clear here. CORS is an _anti-security_ mechanism.
 
