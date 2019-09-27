@@ -20,8 +20,12 @@ tags: pentest ctf
   - [Do you like nesting dolls?](#do-you-like-nesting-dolls)
 - [Binary](#binary)
   - [Crack the Code](#crack-the-code)
+- [Steganography](#steganography)
+  - [Find the flag](#find-the-flag)
+- [Password Cracking](#password-cracking)
+  - [Zip & Pass](#zip--pass)
 
-I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin. I couldn't resist. Over the span of two days I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
+I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin? I couldn't resist. Over the span of two evenings I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
 
 Unfortunately, I waited several weeks after the conference to begin writing this, and I forgot how I solved several of the challenges. This is why you should always take notes during your engagement, whether it's a challenge site or a real target! I may update this article if I take the time to re-solve some of these challenges, but honestly that probably won't happen. So, without further ado let's look at some of the challenges I _did_ remember how to solve.
 
@@ -31,7 +35,7 @@ There were five 2-point challenges related to infosec trivia. I knocked these ou
 
 ### Who crashed 1507 computers in a single day?
 
-This is an homage to one of the classic hacker films, [Hackers][hackers movie] (1995). The main protagonist, alias of __Zero Cool__ (hint: this is the flag), crashed 1,507 computers at the tender age of 11, causing a 7-point drop in the New York Stock Exchange.
+This is an homage to one of the classic hacker films, [Hackers][hackers movie] (1995). The main protagonist, alias __Zero Cool__ (hint: this is the flag), crashed 1,507 computers at the tender age of 11, causing a 7-point drop in the New York Stock Exchange.
 
 Hackers is a definite must-watch classic, but I think [Sneakers][sneakers movie] (1992) is the better 1990s hacker movie.
 
@@ -151,7 +155,7 @@ do
 done
 ```
 
-The script ran _247_ iterations before stopping at `flag.png`.
+The script ran _247!_ iterations before stopping at `flag.png`.
 
 ![nesting dolls output][nesting output]
 
@@ -198,7 +202,7 @@ Reading symbols from Code_breaker...(no debugging symbols found)...done.
 (gdb) info files
 Symbols from "<redacted path>/Derbycon9/crack_the_code/Code_breaker".
 Local exec file:
-	`<redacted path>/Derbycon9/crack_the_code/Code_breaker', 
+	`<redacted path>/Derbycon9/crack_the_code/Code_breaker',
         file type elf64-x86-64.
 	Entry point: 0x1290
 	0x0000000000000238 - 0x0000000000000254 is .interp
@@ -251,7 +255,7 @@ I was able to suss out the complicated rules of the game by entering a few guess
 
 ![Code breaker random guess][cracking code 2]
 
-Ok, you enter 15 digits and the program tells you how many of those digits are in the correct position, and how many of the other digits are valid but in the wrong column. I can brute force this by modifying one column at a time until I know the correct value. The first column is a 4:
+Ok, you enter 15 digits and the program tells you how many of those digits are in the correct position, and how many of the other digits are valid but in the wrong column. I can brute force this by modifying one column at a time until I know the correct value. The first digit is a 4:
 
 ![Code breaker second guess][cracking code 3]
 
@@ -260,6 +264,196 @@ With trial and error, I discover the value:
 ![Code breaker solution][cracking code 4]
 
 Nice.
+
+## Steganography
+
+### Find the flag
+
+Points: 15
+
+> Find the hidden hash.
+
+This challenge came with a `Challenge_3.png` file. Ok, time to break out the steganography tools.
+
+```bash
+➜ steghide extract -sf Challenge_3.png
+Enter passphrase:
+```
+
+I try a few random passwords, none work. Let's take a look at the metadata.
+
+```bash
+➜ exiftool Challenge_3.png
+ExifTool Version Number         : 10.80
+File Name                       : Challenge_3.png
+Directory                       : .
+File Size                       : 76 kB
+File Modification Date/Time     : 2019:09:05 22:40:49-04:00
+File Access Date/Time           : 2019:09:26 23:25:21-04:00
+File Inode Change Date/Time     : 2019:09:05 23:01:20-04:00
+File Permissions                : rw-rw-r--
+File Type                       : PNG
+File Type Extension             : png
+MIME Type                       : image/png
+Image Width                     : 1000
+Image Height                    : 1000
+Bit Depth                       : 8
+Color Type                      : RGB with Alpha
+Compression                     : Deflate/Inflate
+Filter                          : Adaptive
+Interlace                       : Noninterlaced
+Profile Name                    : sRGB IEC61966-2.1
+Profile CMM Type                : Unknown (lcms)
+Profile Version                 : 4.3.0
+Profile Class                   : Display Device Profile
+Color Space Data                : RGB
+Profile Connection Space        : XYZ
+Profile Date Time               : 2019:07:25 20:45:41
+Profile File Signature          : acsp
+Primary Platform                : Microsoft Corporation
+CMM Flags                       : Not Embedded, Independent
+Device Manufacturer             :
+Device Model                    :
+Device Attributes               : Reflective, Glossy, Positive, Color
+Rendering Intent                : Perceptual
+Connection Space Illuminant     : 0.9642 1 0.82491
+Profile Creator                 : Unknown (lcms)
+Profile ID                      : 0
+Profile Description             : sRGB IEC61966-2.1
+Profile Copyright               : No copyright, use freely
+Media White Point               : 0.9642 1 0.82491
+Chromatic Adaptation            : 1.04788 0.02292 -0.05022 0.02959 0.99048 -0.01707 -0.00925 0.01508 0.75168
+Red Matrix Column               : 0.43604 0.22249 0.01392
+Blue Matrix Column              : 0.14305 0.06061 0.71391
+Green Matrix Column             : 0.38512 0.7169 0.09706
+Red Tone Reproduction Curve     : (Binary data 32 bytes, use -b option to extract)
+Green Tone Reproduction Curve   : (Binary data 32 bytes, use -b option to extract)
+Blue Tone Reproduction Curve    : (Binary data 32 bytes, use -b option to extract)
+Chromaticity Channels           : 3
+Chromaticity Colorant           : Unknown (0)
+Chromaticity Channel 1          : 0.64 0.33
+Chromaticity Channel 2          : 0.3 0.60001
+Chromaticity Channel 3          : 0.14999 0.06
+Pixels Per Unit X               : 3543
+Pixels Per Unit Y               : 3543
+Pixel Units                     : meters
+Image Size                      : 1000x1000
+Megapixels                      : 1.0
+```
+
+Err, ok. I don't actually know what I'm doing. Time to slow down, break out Google, and think. Wait, did I open the image yet?
+
+![Challenge 3 steganography][challenge 3]
+
+Not too helpful. Wait! If I open it with Image Viewer...
+
+![Challenge 3 transparent][]
+
+## ENHANCE! <!-- omit in toc -->
+
+![Challenge 3 enhanced][]
+
+Oh. That reads __8f8c2ca5c4bed32e4b364fe26df7f048__. Cool. Hackercat can rein it in.
+
+![Hackercat][]
+
+This is a good reminder to always take a moment to breathe and plan out your attack to make sure you stay on target.
+
+## Password Cracking
+
+### Zip & Pass
+
+Points: 10
+
+> Simple, open the zip. Password is numeric.
+
+This challenge gives you a `ctf.zip` file. Having learned my lesson on the previous challenge, I'm going to double check:
+
+```bash
+➜ unzip ctf.zip
+Archive:  ctf.zip
+[ctf.zip] flag.txt password:
+   skipping: flag.txt                incorrect password
+```
+
+Ok, definitely password-protected. But this is back in territory in which I'm familiar. [john][] is the tool we want. [This][crack encrypted zip] is a great article to follow on how to crack an encrypted zip file.
+
+So, first step is to [compile the jumbo version of john the ripper][john install]. We need the jumbo version for its `zip2john` script that will take an encrypted zip file and hash it appropriately to generate a hash that we can try to crack.
+
+```bash
+git clone https://github.com/magnumripper/JohnTheRipper.git
+cd JohnTheRipper && git checkout bleeding-jumbo
+cd src
+./configure && make -s clean && make -sj4
+cd ../run
+./john --test
+```
+
+What we want to do now is call the following, assuming we have moved back to the directory with the `ctf.zip` file.
+
+```bash
+<path/to/john>/run/zip2john ctf.zip
+```
+
+That should give us:
+
+```bash
+ver 1.0 efh 5455 efh 7875 ctf.zip/flag.txt PKZIP Encr: 2b chk, TS_chk, cmplen=52, decmplen=40, crc=B9F36741
+ctf.zip/flag.txt:$pkzip2$1*2*2*0*34*28*b9f36741*0*42*0*34*b9f3*8468*f80798210ffe881c173582f883279cff09de606c168d3f225c5e638f60aec160508d97fae4fe41018fb2e31dcb749df37edaf9cc*$/pkzip2$:flag.txt:ctf.zip::ctf.zip
+```
+
+Now let's extract out just the bit we care about:
+
+```bash
+<path/to/john>/run/zip2john ctf.zip | cut -d ':' -f 2 > hash.txt
+```
+
+That will give us a `hash.txt` file with the contents:
+
+```plain
+$pkzip2$1*2*2*0*34*28*b9f36741*0*42*0*34*b9f3*8468*f80798210ffe881c173582f883279cff09de606c168d3f225c5e638f60aec160508d97fae4fe41018fb2e31dcb749df37edaf9cc*$/pkzip2$
+```
+
+Now we have a hash to crack. We could pass in a custom wordlist, but we don't need to. john has a default wordlist it will use.
+
+```bash
+➜ <path/to/john>/run/john hash.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (PKZIP [32/64])
+Will run 12 OpenMP threads
+Proceeding with single, rules:Single
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Almost done: Processing the remaining buffered candidate passwords, if any.
+Proceeding with wordlist:<path/to/john>/run/password.lst, rules:Wordlist
+Proceeding with incremental:ASCII
+887766           (?)
+1g 0:00:00:15 DONE 3/3 (2019-09-27 00:00) 0.06397g/s 17625Kp/s 17625Kc/s 17625KC/s 886tt5..883mhd
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+```
+
+Looks like it took about 15 seconds to crack. We can view the results with:
+
+```bash
+➜ <path/to/john>/run/john hash.txt --show
+?:887766
+
+1 password hash cracked, 0 left
+```
+
+The password appears to be __887766__. Let's open our zip file and supply this password:
+
+```bash
+➜ unzip ctf.zip
+Archive:  ctf.zip
+[ctf.zip] flag.txt password:
+ extracting: flag.txt  
+ ```
+
+ ```bash
+➜ cat flag.txt
+Flag = e081129432efb65d52150e47f45899d1
+```
 
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
@@ -285,3 +479,12 @@ Nice.
 [cracking code 2]: /img/derbycon_boa_ctf/cracking_code_2.png
 [cracking code 3]: /img/derbycon_boa_ctf/cracking_code_3.png
 [cracking code 4]: /img/derbycon_boa_ctf/cracking_code_4.png
+[challenge 3]: /img/derbycon_boa_ctf/Challenge_3.png
+[challenge 3 transparent]: /img/derbycon_boa_ctf/Challenge_3_transparent.png
+[challenge 3 enhanced]: /img/derbycon_boa_ctf/Challenge_3_enhance.png
+[hackercat]: https://media.giphy.com/media/heIX5HfWgEYlW/giphy.gif
+[hashcat]: https://github.com/hashcat/hashcat
+[crack encrypted zip]: https://penguin-systems.com/node/10
+[john]: https://github.com/magnumripper/JohnTheRipper
+[john install]: https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/doc/INSTALL
+[seclists]: https://github.com/danielmiessler/SecLists
