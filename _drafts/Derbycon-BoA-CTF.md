@@ -18,6 +18,8 @@ tags: pentest ctf
 - [General](#general)
   - [OSINT: Malware author intel for hire](#osint-malware-author-intel-for-hire)
   - [Do you like nesting dolls?](#do-you-like-nesting-dolls)
+- [Binary](#binary)
+  - [Crack the Code](#crack-the-code)
 
 I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin. I couldn't resist. Over the span of two days I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
 
@@ -157,6 +159,108 @@ But we now have our flag:
 
 ![nesting dolls flag][nesting flag]
 
+## Binary
+
+### Crack the Code
+
+Points: 20
+
+> Play the game or don't.
+
+This challenge included a binary `Code_breaker`. Running `file` on this binary, we are told:
+
+```bash
+➜ file Code_breaker
+Code_breaker: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=43508fb0003043cc72f66ae2c8723ace260bb95c, not stripped
+```
+
+Hmm. I don't know anything about reverse engineering. With a little searching I find that [gdb][gdb] is the tool I need. I found [this StackExchange post][binary stackoverflow] that describes how to find the binary's entry point, set a breakpoint, and walk down the execution.
+
+From the following snippet we find __Entry point: 0x1290__. The only problem is that gdb couldn't access this entry point's memory location:
+
+```bash
+➜ gdb Code_breaker
+GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from Code_breaker...(no debugging symbols found)...done.
+(gdb) info files
+Symbols from "<redacted path>/Derbycon9/crack_the_code/Code_breaker".
+Local exec file:
+	`<redacted path>/Derbycon9/crack_the_code/Code_breaker', 
+        file type elf64-x86-64.
+	Entry point: 0x1290
+	0x0000000000000238 - 0x0000000000000254 is .interp
+	0x0000000000000254 - 0x0000000000000274 is .note.ABI-tag
+	0x0000000000000274 - 0x0000000000000298 is .note.gnu.build-id
+	0x0000000000000298 - 0x00000000000002c0 is .gnu.hash
+	0x00000000000002c0 - 0x0000000000000638 is .dynsym
+	0x0000000000000638 - 0x0000000000000c1f is .dynstr
+	0x0000000000000c20 - 0x0000000000000c6a is .gnu.version
+	0x0000000000000c70 - 0x0000000000000cf0 is .gnu.version_r
+	0x0000000000000cf0 - 0x0000000000000e40 is .rela.dyn
+	0x0000000000000e40 - 0x00000000000010b0 is .rela.plt
+	0x00000000000010b0 - 0x00000000000010c7 is .init
+	0x00000000000010d0 - 0x0000000000001280 is .plt
+	0x0000000000001280 - 0x0000000000001288 is .plt.got
+	0x0000000000001290 - 0x0000000000001ef2 is .text
+	0x0000000000001ef4 - 0x0000000000001efd is .fini
+	0x0000000000001f00 - 0x000000000000206b is .rodata
+	0x000000000000206c - 0x0000000000002100 is .eh_frame_hdr
+	0x0000000000002100 - 0x00000000000023b4 is .eh_frame
+	0x00000000000023b4 - 0x000000000000240e is .gcc_except_table
+	0x0000000000202d98 - 0x0000000000202da8 is .init_array
+	0x0000000000202da8 - 0x0000000000202db0 is .fini_array
+	0x0000000000202db0 - 0x0000000000202db8 is .jcr
+	0x0000000000202db8 - 0x0000000000202fc8 is .dynamic
+	0x0000000000202fc8 - 0x0000000000203000 is .got
+	0x0000000000203000 - 0x00000000002030e8 is .got.plt
+	0x00000000002030e8 - 0x0000000000203100 is .data
+	0x0000000000203100 - 0x0000000000203338 is .bss
+(gdb) break *0x1290
+Breakpoint 1 at 0x1290
+(gdb) run
+Starting program: <redacted path>/Derbycon9/crack_the_code/Code_breaker
+Warning:
+Cannot insert breakpoint 1.
+Cannot access memory at address 0x1290
+```
+
+After a little more searching, I found this can happen when the program has a value hard-coded that it checks for, like:
+
+```assembly
+if (i == 0x1290) { ... } else { ... }
+```
+
+So, gdb is correctly informing me that the memory address `0x1290` does not exist. I was not able to figure out how to break this binary apart. Instead, I opted to play the game.
+
+![Code breaker prompt][cracking code 1]
+
+I was able to suss out the complicated rules of the game by entering a few guesses:
+
+![Code breaker random guess][cracking code 2]
+
+Ok, you enter 15 digits and the program tells you how many of those digits are in the correct position, and how many of the other digits are valid but in the wrong column. I can brute force this by modifying one column at a time until I know the correct value. The first column is a 4:
+
+![Code breaker second guess][cracking code 3]
+
+With trial and error, I discover the value:
+
+![Code breaker solution][cracking code 4]
+
+Nice.
+
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
 [sneakers movie]: https://en.wikipedia.org/wiki/Sneakers_(1992_film)
@@ -175,3 +279,9 @@ But we now have our flag:
 [trevor facebook]: /img/derbycon_boa_ctf/osint_facebook.png
 [nesting output]: /img/derbycon_boa_ctf/nesting_dolls.png
 [nesting flag]: /img/derbycon_boa_ctf/nesting_flag.png
+[gdb]: https://www.gnu.org/software/gdb/
+[binary stackoverflow]: https://reverseengineering.stackexchange.com/a/3816
+[cracking code 1]: /img/derbycon_boa_ctf/cracking_code_1.png
+[cracking code 2]: /img/derbycon_boa_ctf/cracking_code_2.png
+[cracking code 3]: /img/derbycon_boa_ctf/cracking_code_3.png
+[cracking code 4]: /img/derbycon_boa_ctf/cracking_code_4.png
