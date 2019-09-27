@@ -7,6 +7,10 @@ tags: pentest ctf
 
 <!-- markdownlint-disable MD026 -->
 
+I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin? I couldn't resist. Over the span of two evenings I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
+
+Unfortunately, I waited several weeks after the conference to begin writing this, and I forgot how I solved several of the challenges. This is why you should always take notes during your engagement, whether it's a challenge site or a real target! I may update this article if I take the time to re-solve some of these challenges, but honestly that probably won't happen. So, without further ado let's look at some of the challenges I _did_ remember how to solve.
+
 ## List of Challenges <!-- omit in toc -->
 
 - [Trivia](#trivia)
@@ -24,10 +28,11 @@ tags: pentest ctf
   - [Find the flag](#find-the-flag)
 - [Password Cracking](#password-cracking)
   - [Zip & Pass](#zip--pass)
-
-I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin? I couldn't resist. Over the span of two evenings I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
-
-Unfortunately, I waited several weeks after the conference to begin writing this, and I forgot how I solved several of the challenges. This is why you should always take notes during your engagement, whether it's a challenge site or a real target! I may update this article if I take the time to re-solve some of these challenges, but honestly that probably won't happen. So, without further ado let's look at some of the challenges I _did_ remember how to solve.
+- [Cryptography](#cryptography)
+  - [Solve the Cryptogram](#solve-the-cryptogram)
+- [Forensics](#forensics)
+  - [Forensics 101 (part 1)](#forensics-101-part-1)
+  - [Forensics 101 (part 2)](#forensics-101-part-2)
 
 ## Trivia
 
@@ -63,7 +68,7 @@ And finally:
 
 ## General
 
-Now for some real challenges.
+Now for some real challenges. I solved two out of three challenges in this category.
 
 ### OSINT: Malware author intel for hire
 
@@ -165,6 +170,8 @@ But we now have our flag:
 
 ## Binary
 
+I solved one out of four challenges in this category.
+
 ### Crack the Code
 
 Points: 20
@@ -175,6 +182,7 @@ This challenge included a binary `Code_breaker`. Running `file` on this binary, 
 
 ```bash
 ➜ file Code_breaker
+
 Code_breaker: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=43508fb0003043cc72f66ae2c8723ace260bb95c, not stripped
 ```
 
@@ -184,6 +192,7 @@ From the following snippet we find __Entry point: 0x1290__. The only problem is 
 
 ```bash
 ➜ gdb Code_breaker
+
 GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
 Copyright (C) 2018 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -267,6 +276,8 @@ Nice.
 
 ## Steganography
 
+There was only one challenge in this category.
+
 ### Find the flag
 
 Points: 15
@@ -277,6 +288,7 @@ This challenge came with a `Challenge_3.png` file. Ok, time to break out the ste
 
 ```bash
 ➜ steghide extract -sf Challenge_3.png
+
 Enter passphrase:
 ```
 
@@ -284,6 +296,7 @@ I try a few random passwords, none work. Let's take a look at the metadata.
 
 ```bash
 ➜ exiftool Challenge_3.png
+
 ExifTool Version Number         : 10.80
 File Name                       : Challenge_3.png
 Directory                       : .
@@ -361,6 +374,8 @@ This is a good reminder to always take a moment to breathe and plan out your att
 
 ## Password Cracking
 
+There was only one challenge in this category.
+
 ### Zip & Pass
 
 Points: 10
@@ -371,6 +386,7 @@ This challenge gives you a `ctf.zip` file. Having learned my lesson on the previ
 
 ```bash
 ➜ unzip ctf.zip
+
 Archive:  ctf.zip
 [ctf.zip] flag.txt password:
    skipping: flag.txt                incorrect password
@@ -418,6 +434,7 @@ Now we have a hash to crack. We could pass in a custom wordlist, but we don't ne
 
 ```bash
 ➜ <path/to/john>/run/john hash.txt
+
 Using default input encoding: UTF-8
 Loaded 1 password hash (PKZIP [32/64])
 Will run 12 OpenMP threads
@@ -436,6 +453,7 @@ Looks like it took about 15 seconds to crack. We can view the results with:
 
 ```bash
 ➜ <path/to/john>/run/john hash.txt --show
+
 ?:887766
 
 1 password hash cracked, 0 left
@@ -445,6 +463,7 @@ The password appears to be __887766__. Let's open our zip file and supply this p
 
 ```bash
 ➜ unzip ctf.zip
+
 Archive:  ctf.zip
 [ctf.zip] flag.txt password:
  extracting: flag.txt  
@@ -452,8 +471,186 @@ Archive:  ctf.zip
 
  ```bash
 ➜ cat flag.txt
+
 Flag = e081129432efb65d52150e47f45899d1
 ```
+
+## Cryptography
+
+I only solved one out of six challenges in this category.
+
+### Solve the Cryptogram
+
+Points: 20
+
+> Decode this message and submit the answer.
+> GXFZ YO ZXC OCTSIH CIZJR YI ZXC JZUE YIHCD MIHCJ ZXC KCZZCJ Z
+
+A cryptogram! This is a strong signal to go straight to the trusty [quipqiup][]. We enter our puzzle and click solve, and we see the following results:
+
+![Quipqiup cryptogram results][cryptogram]
+
+Result #4 looks like it is it. _What is the second entry in the RTFM index under the letter T?_ I had left my copy of RTFM at home, but I found [this PDF copy][rtfm] on Github. The index begins on page 95, and the second entry under 'T' is __TCPDump__.
+
+## Forensics
+
+I solved eight of the 10 challenges in this category. This was my first real foray into memory forensics challenges, so I spent a lot of time in this area and learned a lot. It paid off!
+
+### Forensics 101 (part 1)
+
+Points: 10
+
+> What is the name of the logged in user?
+
+This challenge provided a `memdump.mem` file. I did some searching and identified [volatility][] as the tool I needed to learn. I had a lot of fun with this tool. Volatility is a memory forensics framework. I learned how to use volatilty from a few resources. [This webpage][volatility basics] was a great primer on the basic usage of the tool. [This cheat sheet from SANS][volatility sans] was also helpful, as well as volatility's [command reference][volatility commands]. Let's see how it works.
+
+I installed it with `sudo apt install volatility`.
+
+The first thing to do is examine the memory image you are working with:
+
+```bash
+➜ volatility -f memdump.mem imageinfo
+
+Volatility Foundation Volatility Framework 2.6
+INFO    : volatility.debug    : Determining profile based on KDBG search...
+          Suggested Profile(s) : Win7SP1x64, Win7SP0x64, Win2008R2SP0x64, Win2008R2SP1x64_23418, Win2008R2SP1x64, Win7SP1x64_23418
+                     AS Layer1 : WindowsAMD64PagedMemory (Kernel AS)
+                     AS Layer2 : FileAddressSpace (<redacted path>/Derbycon9/forensics101/memdump.mem)
+                      PAE type : No PAE
+                           DTB : 0x187000L
+                          KDBG : 0xf80002a39110L
+          Number of Processors : 1
+     Image Type (Service Pack) : 1
+                KPCR for CPU 0 : 0xfffff80002a3ad00L
+             KUSER_SHARED_DATA : 0xfffff78000000000L
+           Image date and time : 2019-07-26 19:37:05 UTC+0000
+     Image local date and time : 2019-07-26 12:37:05 -0700
+```
+
+Volatility examines the image and attempts to determine what OS it came from. As you can see, it isn't really sure and provides several different Windows versions. I ended up using the first profile, `Win7SP1x64`.
+
+My goal is to find the logged in user? Let's use volatility to look at recent terminal history:
+
+```bash
+➜ volatility --profile=Win7SP1x64 -f memdump.mem consoles
+
+Volatility Foundation Volatility Framework 2.6
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1612
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 2 HistoryBufferMax: 4
+OriginalTitle: -
+Title: -
+----
+CommandHistory: 0x2515a0 Application: - Flags: Allocated
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x58
+----
+CommandHistory: 0x2512f0 Application: cygrunsrv.exe Flags: 
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x0
+----
+Screen 0x26fdd0 X:80 Y:300
+Dump:
+
+**************************************************
+ConsoleProcess: conhost.exe Pid: 744
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 2 HistoryBufferMax: 4
+OriginalTitle: %SystemRoot%\system32\cmd.exe
+Title: Administrator: C:\Windows\system32\cmd.exe
+AttachedProcess: cmd.exe Pid: 1940 Handle: 0x60
+----
+CommandHistory: 0x22ef70 Application: whoami.exe Flags: 
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x0
+----
+CommandHistory: 0x22ec50 Application: cmd.exe Flags: Allocated, Reset
+CommandCount: 1 LastAdded: 0 LastDisplayed: 0
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x60
+Cmd #0 at 0x22d810: whoami
+----
+Screen 0x211100 X:80 Y:300
+Dump:
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Users\CTF-User-Admin>whoami
+ctf-win-7\ctf-user-admin
+
+C:\Users\CTF-User-Admin>
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1760
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 1 HistoryBufferMax: 4
+OriginalTitle: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+Title: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+AttachedProcess: flag449.exe Pid: 2368 Handle: 0x60
+----
+CommandHistory: 0x21ecb0 Application: flag449.exe Flags: Allocated
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x60
+----
+Screen 0x201170 X:80 Y:300
+Dump:
+Please Enter Password:
+```
+
+It looks like __ctf-user-admin__ most recently used this machine.
+
+### Forensics 101 (part 2)
+
+Points: 30
+
+> What is the user's password?
+
+Ok, Window's passwords are stored inside `C:\windows\system32\config\SAM`. I have to figure out how to retrieve the contents of that file through volatility. I need to learn a little bit more about how Windows works. An important concept is the [registry hive][]. In particular, it would be really cool if we could see inside the `HKEY_LOCAL_MACHINE\SAM` hive.
+
+Volatility has a [`hivelist` command][hivelist] to locate the virtual addresses of registry hives in memory. We can use the [`hashdump` command][hashdump] to retrieve cached domain credentials. We need to pass `hashdump` the virtual addresses of `\windows\system32\config\SAM` (`-s`) and `\registry\machine\system` (`-y`).
+
+```bash
+➜ volatility --profile=Win7SP1x64 -f memdump.mem hivelist
+
+Volatility Foundation Volatility Framework 2.6
+Virtual            Physical           Name
+------------------ ------------------ ----
+0xfffff8a004d64010 0x000000002311d010 \SystemRoot\System32\Config\DEFAULT
+0xfffff8a00000f010 0x000000002719a010 [no name]
+0xfffff8a000024010 0x00000000270a5010 \REGISTRY\MACHINE\SYSTEM
+0xfffff8a0000531f0 0x00000000271d41f0 \REGISTRY\MACHINE\HARDWARE
+0xfffff8a000534410 0x0000000024038410 \Device\HarddiskVolume1\Boot\BCD
+0xfffff8a000549010 0x0000000023ff8010 \SystemRoot\System32\Config\SOFTWARE
+0xfffff8a000d21010 0x0000000021127010 \SystemRoot\System32\Config\SECURITY
+0xfffff8a000d93010 0x0000000018bff010 \SystemRoot\System32\Config\SAM
+0xfffff8a000e06010 0x00000000185ff010 \??\C:\Windows\ServiceProfiles\NetworkService\NTUSER.DAT
+0xfffff8a000e98010 0x0000000017f08010 \??\C:\Windows\ServiceProfiles\LocalService\NTUSER.DAT
+0xfffff8a0010c6010 0x0000000010ce9010 \??\C:\Users\sshd_server\ntuser.dat
+0xfffff8a001152010 0x00000000101b7010 \??\C:\Users\sshd_server\AppData\Local\Microsoft\Windows\UsrClass.dat
+0xfffff8a0011cf010 0x000000000f764010 \??\C:\System Volume Information\Syscache.hve
+0xfffff8a0014c0010 0x00000000309e3010 \??\C:\Users\CTF-User-Admin\AppData\Local\Microsoft\Windows\UsrClass.dat
+0xfffff8a001a6b410 0x0000000035afa410 \??\C:\Users\CTF-User-Admin\ntuser.dat
+```
+
+Since we want the virtual addresses, we grab `0xfffff8a000024010 \REGISTRY\MACHINE\SYSTEM` and `0xfffff8a000d93010 \SystemRoot\System32\Config\SAM`. Now for the `hashdump` command:
+
+```bash
+➜ volatility hashdump -y 0xfffff8a000024010 -s 0xfffff8a000d93010 --profile=Win7SP1x64 -f memdump.mem
+
+Volatility Foundation Volatility Framework 2.6
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:fc525c9683e8fe067095ba2ddc971889:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+IEUser:1000:aad3b435b51404eeaad3b435b51404ee:fc525c9683e8fe067095ba2ddc971889:::
+sshd:1001:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+sshd_server:1002:aad3b435b51404eeaad3b435b51404ee:8d0a16cfc061c3359db455d00ec27035:::
+CTF-User-Admin:1003:aad3b435b51404eeaad3b435b51404ee:902122102d5d2b0e3221e6ba4a00f7b9:::
+```
+
+We have the password hashes! But we still need to crack them.
 
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
@@ -488,3 +685,13 @@ Flag = e081129432efb65d52150e47f45899d1
 [john]: https://github.com/magnumripper/JohnTheRipper
 [john install]: https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/doc/INSTALL
 [seclists]: https://github.com/danielmiessler/SecLists
+[quipqiup]: https://quipqiup.com/
+[cryptogram]: /img/derbycon_boa_ctf/cryptogram.png
+[rtfm]: https://github.com/tanc7/hacking-books/blob/master/RTFM%20-%20Red%20Team%20Field%20Manual%20v3.pdf
+[volatility]: https://github.com/volatilityfoundation/volatility
+[volatility basics]: https://samsclass.info/121/proj/p4-Volatility.htm
+[volatility sans]: https://blogs.sans.org/computer-forensics/files/2012/04/Memory-Forensics-Cheat-Sheet-v1_2.pdf
+[volatility commands]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference
+[registry hive]: https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-hives
+[hivelist]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hivelist
+[hashdump]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hashdump
