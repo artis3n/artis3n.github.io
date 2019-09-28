@@ -114,7 +114,7 @@ Here we see a contact paste for the malware author's Facebook account. The hunt 
 
 ![MalwareTrevor Facebook profile][trevor facebook]
 
-Success! We have a telephone number for the malware author. When I texted the number, I received the flag to submit for this challenge. I no longer remember what it was.
+Success! We have a telephone number for the malware author. When I texted the number, I received the flag to submit for this challenge.
 
 ### Do you like nesting dolls?
 
