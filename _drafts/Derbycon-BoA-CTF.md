@@ -7,9 +7,9 @@ tags: pentest ctf
 
 <!-- markdownlint-disable MD026 -->
 
-I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin? I couldn't resist. Over the span of two evenings I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
+I recently attended the final [Derbycon][] conference. I did not participate in the main conference capture-the-flag (CTF) event, but a jeopardy-style CTF provided by Bank of America caught my eye. Get 250 points and win a challenge coin? I couldn't resist. For two evenings I wracked up 260 points and won a coin! I wanted to write up my solution to some of the challenges to teach others some things I learned as well as provide notes for myself on future CTF events.
 
-Unfortunately, I waited several weeks after the conference to begin writing this, and I forgot how I solved several of the challenges. This is why you should always take notes during your engagement, whether it's a challenge site or a real target! I may update this article if I take the time to re-solve some of these challenges, but honestly that probably won't happen. So, without further ado let's look at some of the challenges I _did_ remember how to solve.
+Unfortunately, I waited several weeks after the conference to begin writing this, and I forgot how I solved several of the challenges. This is why you should always take notes during your engagement, whether it's a challenge site or a real target! I may update this article if I take the time to resolve some of these challenges, but honestly, that probably won't happen. So, without further ado let's look at some of the challenges I _did_ remember how to solve.
 
 ## List of Challenges <!-- omit in toc -->
 
@@ -25,7 +25,7 @@ Unfortunately, I waited several weeks after the conference to begin writing this
 - [Binary](#binary)
   - [Crack the Code](#crack-the-code)
 - [Steganography](#steganography)
-  - [Find the flag](#find-the-flag)
+  - [Find the Flag](#find-the-flag)
 - [Password Cracking](#password-cracking)
   - [Zip & Pass](#zip--pass)
 - [Cryptography](#cryptography)
@@ -53,7 +53,7 @@ Hackers is a definite must-watch classic, but I think [Sneakers][sneakers movie]
 
 ### What season/episode of Mr Robot featured the Derbycon founder’s name used as a fake name by the protagonist?
 
-This is a fun fact about Derbycon's founder, Dave Kennedy. [Mr. Robot][mr robot] is an excellent hacker show [dedicated to providing realistic "hacking" behavior][mr robot hacking]. The exploits and commands the show's protagonists run are actual commands, and are usually exactly what a real-life hacker would run in their situation. In season 3 episode 5, the main protagonist, Elliot, pretends to be called "Dave Kennedy" while escaping from law enforcement.
+This is a fun fact about Derbycon's founder, Dave Kennedy. [Mr. Robot][mr robot] is an excellent hacker show [dedicated to providing realistic "hacking" behavior][mr robot hacking]. The exploits and commands the show's protagonists run are actual commands and are usually exactly what a real-life hacker would run in their situation. In season 3 episode 5, the main protagonist, Elliot, pretends to be called "Dave Kennedy" while escaping from law enforcement.
 
 <iframe width="650" height="370" src="https://www.youtube.com/embed/z-iDNGxkQgE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -84,13 +84,13 @@ Points: 20
 > We think a malware author has intel and is willing to share. Find his phone number and call or text him.
 > Handle: @MalwareTrevor
 
-Trevor is an [infamous cockroach][trevor] who lived and died during Derbycon 7. He first appeared in the milkshake of an attendee at a Shake Shack near to the conference venue. Derbycon attendees have since held memorials for Trevor outside the Shake Shack, such as this touching tribute during Derbycon 9:
+Trevor is an [infamous cockroach][trevor] who lived and died during Derbycon 7. He first appeared in the milkshake of an attendee at a Shake Shack near the conference venue. Derbycon attendees have since held memorials for Trevor outside the Shake Shack, such as this touching tribute during Derbycon 9:
 
 <blockquote class="twitter-tweet" data-dnt="true"><p lang="und" dir="ltr">.<a href="https://twitter.com/hashtag/TrevorForget?src=hash&amp;ref_src=twsrc%5Etfw">#TrevorForget</a> <a href="https://t.co/cRmeJB5AcT">pic.twitter.com/cRmeJB5AcT</a></p>&mdash; Zlata (@pavlova_zlata) <a href="https://twitter.com/pavlova_zlata/status/1170598427463442434?ref_src=twsrc%5Etfw">September 8, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Now it appears Trevor has gone from milkshake spelunker to malware author. We'll have to put a stop to that! Let's find some personal information on MalwareTrevor.
 
-First thing to do, a general Google search to see what hits we get:
+The first thing to do is a general Google search to see what hits we get:
 
 ![Google search for @MalwareTrevor][trevor google]
 
@@ -106,7 +106,7 @@ Hmm... There doesn't seem to be anything useful in the gist. But, now we have th
 
 ![@MalTrevorMan Github profile][trevor github profile]
 
-They keep their interesting stuff on pastebin, do they? Off we go. Now, I don't really know how to navigate Pastebin, so to find the proper URL for a user profile I made my own account and navigated to my profile. The URL was structured `https://pastebin.com/u/<USER>`. So, let's search both handles we've discovered for our malware author, MalwareTrevor and MalTrevorMan. MalwareTrevor didn't exist, however we get a hit for MalTrevorMan.
+They keep their interesting stuff on Pastebin, do they? Off we go. Now, I don't know how to navigate Pastebin, so to find the proper URL for a user profile I made my own account and navigated to my profile. The URL was structured `https://pastebin.com/u/<USER>`. So, let's search both handles we've discovered for our malware author, MalwareTrevor and MalTrevorMan. MalwareTrevor didn't exist, however, we get a hit for MalTrevorMan.
 
 ![MalTrevorMan Pastebin post][trevor pastebin]
 
@@ -124,7 +124,7 @@ Points: 25
 
 This challenge included a downloadable _nesting_dolls.zip_ file. Inside the zip file was a `VSPWXKGO.tar.gz` file. Inside that was a `FCDLXQSE.7z` file. Inside that was a `XOREPDRA.7z` file. And so on... I actually did about 30 of these manually before looking at my terminal and thinking _wow. I am definitely doing this wrong._
 
-I noticed that the archives were either `.zip`, `.tar.gz`, `.tar.bz2`, `.tar`, or `.7z`. I made the guess that the final item would include `flag` in the title and wrote the following script. We clean up the old archive at each stage of the inception hell hole.
+I noticed that the archives were either `.zip`, `.tar.gz`, `.tar.bz2`, `.tar`, or `.7z`. I guessed that the final item would include `flag` in the title and wrote the following script. We clean up the old archive at each stage of the inception hell hole.
 
 ```bash
 #!/bin/bash
@@ -193,9 +193,9 @@ This challenge included a binary `Code_breaker`. Running `file` on this binary, 
 Code_breaker: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.32, BuildID[sha1]=43508fb0003043cc72f66ae2c8723ace260bb95c, not stripped
 ```
 
-Hmm. I don't know anything about reverse engineering. With a little searching I find that [gdb][gdb] is the tool I need. I found [this StackExchange post][binary stackoverflow] that describes how to find the binary's entry point, set a breakpoint, and walk down the execution.
+Hmm. I don't know anything about reverse engineering. With a little searching, I find that [gdb][gdb] is the tool I need. I found [this StackExchange post][binary stackoverflow] that describes how to find the binary's entry point, set a breakpoint, and walk down the execution.
 
-From the following snippet we find __Entry point: 0x1290__. The only problem is that gdb couldn't access this entry point's memory location:
+From the following snippet, we find __Entry point: 0x1290__. The only problem is that gdb couldn't access this entry point's memory location:
 
 ```bash
 ➜ gdb Code_breaker
@@ -285,7 +285,7 @@ Nice.
 
 There was only one challenge in this category.
 
-### Find the flag
+### Find the Flag
 
 Points: 15
 
@@ -389,7 +389,7 @@ Points: 10
 
 > Simple, open the zip. Password is numeric.
 
-This challenge gives you a `ctf.zip` file. Having learned my lesson on the previous challenge, I'm going to double check:
+This challenge gives you a `ctf.zip` file. Having learned my lesson on the previous challenge, I'm going to double-check:
 
 ```bash
 ➜ unzip ctf.zip
@@ -507,13 +507,13 @@ I solved eight of the 10 challenges in this category. This was my first real for
 
 Points: 10
 
-> What is the name of the logged in user?
+> What is the name of the logged-in user?
 
-This challenge provided a `memdump.mem` file. I did some searching and identified [volatility][] as the tool I needed to learn. I had a lot of fun with this tool. Volatility is a memory forensics framework. I learned how to use volatilty from a few resources. [This webpage][volatility basics] was a great primer on the basic usage of the tool. [This cheat sheet from SANS][volatility sans] was also helpful, as well as volatility's [command reference][volatility commands]. Let's see how it works.
+This challenge provided a `memdump.mem` file. I did some searching and identified [volatility][] as the tool I needed to learn. I had a lot of fun with this tool. Volatility is a memory forensics framework. I learned how to use volatility from a few resources. [This webpage][volatility basics] was a great primer on the basic usage of the tool. [This cheat sheet from SANS][volatility sans] was also helpful, as well as volatility's [command reference][volatility commands]. Let's see how it works.
 
 I installed it with `sudo apt install volatility`.
 
-The first thing to do is examine the memory image you are working with:
+The first thing to do is to examine the memory image you are working with:
 
 ```bash
 ➜ volatility -f memdump.mem imageinfo
@@ -536,7 +536,7 @@ INFO    : volatility.debug    : Determining profile based on KDBG search...
 
 Volatility examines the image and attempts to determine what OS it came from. As you can see, it isn't really sure and provides several different Windows versions. I ended up using the first profile, `Win7SP1x64`.
 
-My goal is to find the logged in user? Let's use volatility to look at recent terminal history:
+My goal is to find the logged-in user? Let's use volatility to look at recent terminal history:
 
 ```bash
 ➜ volatility --profile=Win7SP1x64 -f memdump.mem consoles
@@ -618,7 +618,7 @@ Points: 30
 
 Ok, Windows' passwords are stored inside `C:\windows\system32\config\SAM`. I have to figure out how to retrieve the contents of that file through volatility. I need to learn a little bit more about how Windows works. The SAM file is locked by the kernel and not accessible when the operating system is booted up. This file is encrypted with a key stored in `C:\windows\system32\config\system` which is similarly locked from access. During boot, Windows will decrypt the values in the SAM file using the key in the system file and load the hashes into the registry. Windows uses NTLM hashes, which are [known to be quite weak][ntlm bad]. An important concept is Windows' [registry hives][]. In particular, it would be really cool if we could see inside the `HKEY_LOCAL_MACHINE\SAM` hive.
 
-It turns out, volatility makes this really simple for us. Volatility has a [`hivelist` command][hivelist] to locate the virtual addresses of registry hives in memory. We can then use the [`hashdump` command][hashdump] to retrieve cached domain credentials. We need to pass `hashdump` the virtual addresses of `\windows\system32\config\SAM` (`-s`) and `\registry\machine\system` (`-y`) so volatility can decrypt the hashes.
+It turns out, volatility makes this really simple for us. Volatility has a [`hivelist` command][hivelist] to locate the virtual addresses of registry hives in memory. We can then use the [`hashdump` command][hashdump] to retrieve cached domain credentials out of the registry hive. We need to pass `hashdump` the virtual addresses of `\windows\system32\config\SAM` (`-s`) and `\registry\machine\system` (`-y`) so volatility can decrypt the hashes.
 
 ```bash
 ➜ volatility --profile=Win7SP1x64 -f memdump.mem hivelist
@@ -657,11 +657,11 @@ sshd_server:1002:aad3b435b51404eeaad3b435b51404ee:8d0a16cfc061c3359db455d00ec270
 CTF-User-Admin:1003:aad3b435b51404eeaad3b435b51404ee:902122102d5d2b0e3221e6ba4a00f7b9:::
 ```
 
-We have the password hashes! But we still need to crack them. Let's extract the hashes from the output above and move them to a file. The Windows SAM file stores user accounts in the following format: `username:user ID:NTLM hash:LM hash`. LM is an even older hash format than NTLM and is turned off by default on modern Windows machines, however it is still stored in the SAM file. We will extract out the LM hashes (the last value between the colons) as they will be much faster to crack, although if you would prefer you can use the NTLM hashes with minor tweaks to the following commands (as I had to, as you will see).
+We have the password hashes! But we still need to crack them. Let's extract the hashes from the output above and move them to a file. We will extract out the NTLM hashes from our result (the last value between the colons).
 
 ![Volatility hashdump hashes][]
 
-To crack these hashes we will use [hashcat][]. I installed it with `sudo apt install hashcat`. Hashcat is similar to john the ripper. People claim that there are differences but I don't believe them. We used john in a previous challenge, so let's look at how we would use hashcat:
+To crack these hashes we will use [hashcat][]. I installed it with `sudo apt install hashcat`. Hashcat is similar to john the ripper. People claim that there are differences but I don't believe them. Both are very powerful tools and, depending on the provided wordlist and cracking parameters, each can outperform the other. In this case, we used john in a previous challenge so let's look at how we would use hashcat:
 
 ```bash
 ➜ hashcat -O -m 1000 -a 3 forensics_101_ch2_hashes_LM.txt
@@ -669,7 +669,7 @@ To crack these hashes we will use [hashcat][]. I installed it with `sudo apt ins
 hashcat (v5.1.0) starting...
 ```
 
-The `-O` tells hashcat to optimize the workload to my kernel. The set of hashes is so small this makes no impact, but it's good to know about. We have to tell hashcat what type of hash we're working with along with the level of aggressiveness we want hashcat to work. `-m 1000` tells hashcat that we are giving it NTLM hashes. I said before that we grabbed the LM hashes, but for some reason hashcat was unable to crack them with `-m 3000` (for LM). I'm not sure if hashcat is in the wrong or the hashes in the picture above are actually NTLM. Whatever the case, I cracked them with `-m 1000`. `-a 3` tells hashcat to use the brute-force attack mode.
+The `-O` tells hashcat to optimize the workload to my kernel. The set of hashes is so small this makes no impact, but it's good to know about. We have to tell hashcat what type of hash we're working with along with the level of aggressiveness we want hashcat to work. `-m 1000` tells hashcat that we are giving it NTLM hashes. `-a 3` tells hashcat to use the brute-force attack mode.
 
 And off we go.
 
@@ -717,7 +717,7 @@ About 8 minutes in on my machine, we get our first hit:
 
 ![hashcat ctfadmin hash][ctfadmin hash]
 
-One password is __ctfadmin__. If we match this hash to the list of users in the volatility `hashdump` command, we tie this to the ctf-user-admin user. Great! At this point we have solved the challenge, but if you leave hashcat working you will get an additional hash:
+One password is __ctfadmin__. If we match this hash to the list of users in the volatility `hashdump` command, we tie this to the ctf-user-admin user. Great! At this point, we have solved the challenge, but if you leave hashcat working you will get an additional hash:
 
 ```bash
 ➜ hashcat -O -m 1000 -a 3 forensics_101_ch2_hashes_LM.txt --show
@@ -728,13 +728,15 @@ fc525c9683e8fe067095ba2ddc971889:Passw0rd!
 
 `--show` lets us look up the values that hashcat has cracked previously from hashcat's [potfile][hashcat potfile]. Looks like the system administrator's password is `Passw0rd!`. Many secure.
 
+__Note__: My colleague reminded me that he solved this challenge with john with the command `john --format=nt forensics.hash  --wordlist=/usr/share/wordlists/rockyou.txt`. `rockyou.txt` is one of the default wordlists on Kali Linux. With this command, john cracked the above passwords in seconds, whereas my hashcat command took about 8 minutes for the first hash and several minutes more for the second.
+
 ### Forensics 101 (part 3)
 
 Points: 10
 
 > What is the hostname of the system?
 
-Surely somewhere in this memory dump is the hostname of the computer. Sure enough, the internet tells me that the `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName` registry key contains the hostname. Volatility's [`printkey` command][printkey] will let us read the value of this key. We can pass a specific hive to `printkey` with the `-o` option. Let's run `hivelist` again to pull up those virtual addresses:
+Surely somewhere in this memory dump is the hostname of the computer. Indeed, the internet tells me that the `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName` registry key contains the hostname. Volatility's [`printkey` command][printkey] will let us read the value of this key. We can pass a specific hive to `printkey` with the `-o` option. Let's run `hivelist` again to pull up those virtual addresses:
 
 ```bash
 ➜ volatility --profile=Win7SP1x64 -f memdump.mem hivelist
@@ -780,6 +782,24 @@ REG_SZ        ComputerName    : (S) CTF-WIN-7
 ```
 
 We enter our __CTF-WIN-7__ flag and proceed.
+
+Oh, I suppose you could also look at the `consoles` output again:
+
+```bash
+Screen 0x211100 X:80 Y:300
+Dump:
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Users\CTF-User-Admin>whoami
+ctf-win-7\ctf-user-admin
+
+C:\Users\CTF-User-Admin>
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1760
+```
+
+`ctf-win-7\ctf-user-admin` tells us the machine's hostname is `ctf-win-7`.
 
 ### Forensics 101 (part 4)
 
@@ -900,9 +920,9 @@ Points: 10
 
 > What is the IP address of the host?
 
-I admit, I guessed with this one until I got the right IP address. There is definitely a "right" way to solve this, and I welcome your comments if you would like to guide me to the light. Here is how I solved it.
+I admit I guessed with this one until I got the right IP address. There is definitely a "right" way to solve this, and I welcome your comments if you would like to guide me to the light. Here is how I solved it.
 
-Volatility has [several networking commands][volatility networking]. Many are only valid for only versions of Windows. In fact, the only command listed that would run on the `Win7SP1x64` profile was [`netscan`][netscan]. Netscan scans for network artifacts and "finds TCP endpoints, TCP listeners, UDP endpoints, and UDP listeners."
+Volatility has [several networking commands][volatility networking]. Many are only valid for older versions of Windows. In fact, the only command listed that would run on the `Win7SP1x64` profile was [`netscan`][netscan]. Netscan scans for network artifacts and "finds TCP endpoints, TCP listeners, UDP endpoints, and UDP listeners."
 
 Here is some of the output of `netscan`:
 
@@ -1074,7 +1094,7 @@ $TY-08-21 10:09:41.0000000000 _Firmware.extracted/watch
 ...
 ```
 
-Ahh, we needed to reverse the sort in order to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog. I'm not getting accurate results from this.
+Ahh, we needed to reverse the sort to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog. I'm not getting accurate results from this.
 
 At this point, a couple of hours into this challenge, I was very frustrated and running whatever querying commands I could think of.
 
@@ -1149,7 +1169,7 @@ This challenge frustrated me more than the previous one. I spent about 2-3 hours
 -rwxr-xr-x 1 artis3n artis3n 1131 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/upgrade_check.sh
 ```
 
-I start grepping through these files looking for something suspicious. I try `grep`ing for `*com*`, `*org*`, `*net*`, etc. across these files, trying to suss out URLs. Nothing suspicious pops out. I am not getting anywhere with this challenge.
+I started grepping through these files looking for something suspicious. I tried `grep`ing for `*com*`, `*org*`, `*net*`, etc. across these files, trying to suss out URLs. Nothing suspicious popped out. I run `strings` on each script in turn and manually walk through the results, but there's too much noise. I am not getting anywhere with this challenge.
 
 A colleague prompts me to think about how, as an attacker, I might try to exfiltrate my data from the backdoor. I look again at my list of scripts.
 
