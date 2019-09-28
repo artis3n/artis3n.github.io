@@ -38,6 +38,7 @@ Unfortunately, I waited several weeks after the conference to begin writing this
   - [Forensics 101 (part 5)](#forensics-101-part-5)
   - [Forensics 101 (part 6)](#forensics-101-part-6)
   - [Firmware Hacked (part 1)](#firmware-hacked-part-1)
+  - [Firmware Hacked (part 2)](#firmware-hacked-part-2)
 
 ## Trivia
 
@@ -926,7 +927,127 @@ Points: 30
 
 > Someone altered this firmware. Find the flag and submit it.
 
+Ok, now we are on to the second set of forensics challenges. We are provided a `Firmware` file and, indeed, we can confirm it is firmware.
 
+```bash
+➜ file Firmware
+
+Firmware: data
+```
+
+Searching the internet, I learned [`binwalk`][binwalk] is a firmware analysis tool that could help us.
+
+![binwalk command][]
+
+`binwalk` analyzes our firmware and gives us some information on what we're working with. Specifically, we see that this is a `Squashfs` filesystem, so let's have binwalk extract out that file system:
+
+```bash
+binwalk -e ./Firmware
+```
+
+![binwalk extracted][]
+
+There is a LOT in here. Time to hunt. We're looking for a recently modified file, so let's organize our file system by recently modified files. I ran this find command without the `-newermt` flag and then ran this more precise command with a date somewhere near the most recent dates that I saw.
+
+```bash
+➜ find _Firmware.extracted -type f -newermt 2019-08-07 -printf '$TY-%Tm-%Td %TT %p\n' | sort
+$TY-08-20 11:32:30.0000000000 _Firmware.extracted/authorize
+$TY-08-20 11:32:30.0000000000 _Firmware.extracted/squashfs-root/etc/freeradius/mods-config/files/authorize
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/addpppoeconnected
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/addpppoetime
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/adjtimex
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/always
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/arp
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/arping
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/ash
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/autokill_wiviz
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/awk
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/basename
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/bash
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/beep
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/blkid
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/bunzip2
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cache_eap
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cat
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chap
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chattr
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/check_ps
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/check_ses_led
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chgrp
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chilli
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chilli_opt
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chilli_query
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chilli_radconfig
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chilli_response
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chmod
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chown
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/chroot
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/clear
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cmp
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cp
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cron.d
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/cut
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/date
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dbclient
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dc
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dd
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/ddns_success
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/default
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/delpppoeconnected
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/detail
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/detail.log
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/df
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c.conf
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6c-state
+$TY-08-21 10:09:41.0000000000 _Firmware.extracted/dhcp6s
+```
+
+This is just a snippet of the returned results. You can see I've formatted the files with the last modified timestamp on the left. Let me say that getting to this point was at least an hour of blind searching through the file system until I organized my thoughts well enough to execute that `find` command. `_Firmware.extracted/authorize` looks interesting, however...
+
+```bash
+➜ cat _Firmware.extracted/authorize                
+
+...
+...
+
+#
+# Default for SLIP: dynamic IP address, SLIP mode.
+#
+#DEFAULT	Hint == "SLIP"
+#	Framed-Protocol = SLIP
+
+#
+# Last default: rlogin to our main server.
+#
+#DEFAULT
+#	Service-Type = Login-User,
+#	Login-Service = Rlogin,
+#	Login-IP-Host = shellbox.ispdomain.com
+
+# #
+# # Last default: shell on the local terminal server.
+# #
+# DEFAULT
+# 	Service-Type = Administrative-User
+
+
+# On no match, the user is denied access.
+
+hacker    Cleartext-Password := "toor"
+#########################################################
+# You should add test accounts to the TOP of this file! #
+# See the example user "bob" above.                     #
+#########################################################
+```
+
+Well that definitely looks suspicious. Now... I don't remember exactly what the flag was for this. I think it was the file path? You're close once you find that the hacker created an account for themselves. I'm pretty sure the flag was the file path or name.
+
+### Firmware Hacked (part 2)
+
+Points: 30
+
+> We think there's a backdoor, find the script. Identify and submit the domain.
 
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
@@ -981,3 +1102,6 @@ Points: 30
 [volatility pslist]: /img/derbycon_boa_ctf/volatility_pslist.png
 [volatility networking]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#networking
 [volatility netscan]: /img/derbycon_boa_ctf/volatility_netscan.png
+[binwalk]: https://github.com/ReFirmLabs/binwalk
+[binwalk command]: /img/derbycon_boa_ctf/binwalk.png
+[binwalk extracted]: /img/derbycon_boa_ctf/binwalk_extracted.png
