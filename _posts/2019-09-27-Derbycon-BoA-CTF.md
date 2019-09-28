@@ -1094,7 +1094,7 @@ $TY-08-21 10:09:41.0000000000 _Firmware.extracted/watch
 ...
 ```
 
-Ahh, we needed to reverse the sort to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog. I'm not getting accurate results from this.
+Ahh, we needed to reverse the sort to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog (similarly, I had dates day-of when going through this exercise during Derbycon). I'm not getting accurate results from this.
 
 At this point, a couple of hours into this challenge, I was very frustrated and running whatever querying commands I could think of.
 
@@ -1169,9 +1169,9 @@ This challenge frustrated me more than the previous one. I spent about 2-3 hours
 -rwxr-xr-x 1 artis3n artis3n 1131 Aug  6 03:54 _Firmware.extracted/squashfs-root/usr/libexec/nocat/upgrade_check.sh
 ```
 
-I started grepping through these files looking for something suspicious. I tried `grep`ing for `*com*`, `*org*`, `*net*`, etc. across these files, trying to suss out URLs. Nothing suspicious popped out. I run `strings` on each script in turn and manually walk through the results, but there's too much noise. I am not getting anywhere with this challenge.
+I started grepping through these files looking for something suspicious. I tried `grep`ing for `*com*`, `*org*`, `*net*`, etc. across these files, trying to suss out URLs. Nothing suspicious popped out. I ran `strings` on each script in turn and manually walked through the results, but there was too much noise. I was not getting anywhere with this challenge.
 
-A colleague prompts me to think about how, as an attacker, I might try to exfiltrate my data from the backdoor. I look again at my list of scripts.
+A colleague prompted me to think about how, as an attacker, I might try to exfiltrate my data from the backdoor. I looked again at my list of scripts.
 
 ```bash
 _Firmware.extracted/openvpnlog.sh
