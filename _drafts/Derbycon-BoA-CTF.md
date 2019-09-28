@@ -33,6 +33,11 @@ Unfortunately, I waited several weeks after the conference to begin writing this
 - [Forensics](#forensics)
   - [Forensics 101 (part 1)](#forensics-101-part-1)
   - [Forensics 101 (part 2)](#forensics-101-part-2)
+  - [Forensics 101 (part 3)](#forensics-101-part-3)
+  - [Forensics 101 (part 4)](#forensics-101-part-4)
+  - [Forensics 101 (part 5)](#forensics-101-part-5)
+  - [Forensics 101 (part 6)](#forensics-101-part-6)
+  - [Firmware Hacked (part 1)](#firmware-hacked-part-1)
 
 ## Trivia
 
@@ -77,7 +82,7 @@ Points: 20
 > We think a malware author has intel and is willing to share. Find his phone number and call or text him.
 > Handle: @MalwareTrevor
 
-Trevor is an [infamous cockroach][trevor] who lived and died during Derbycon 7. He first appeared in the milkshake of an attendee at a Shake Shack near to the conference venue, the franchise owners of which no doubt desperately wished for Derbycon's end. Derbycon attendees have since held memorials for Trevor outside the Shake Shack, such as this touching tribute during Derbycon 9:
+Trevor is an [infamous cockroach][trevor] who lived and died during Derbycon 7. He first appeared in the milkshake of an attendee at a Shake Shack near to the conference venue. Derbycon attendees have since held memorials for Trevor outside the Shake Shack, such as this touching tribute during Derbycon 9:
 
 <blockquote class="twitter-tweet" data-dnt="true"><p lang="und" dir="ltr">.<a href="https://twitter.com/hashtag/TrevorForget?src=hash&amp;ref_src=twsrc%5Etfw">#TrevorForget</a> <a href="https://t.co/cRmeJB5AcT">pic.twitter.com/cRmeJB5AcT</a></p>&mdash; Zlata (@pavlova_zlata) <a href="https://twitter.com/pavlova_zlata/status/1170598427463442434?ref_src=twsrc%5Etfw">September 8, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -394,7 +399,7 @@ Archive:  ctf.zip
 
 Ok, definitely password-protected. But this is back in territory in which I'm familiar. [john][] is the tool we want. [This][crack encrypted zip] is a great article to follow on how to crack an encrypted zip file.
 
-So, first step is to [compile the jumbo version of john the ripper][john install]. We need the jumbo version for its `zip2john` script that will take an encrypted zip file and hash it appropriately to generate a hash that we can try to crack.
+So, first step is to [compile the jumbo version of john the ripper][john install]. We need the jumbo version for its `zip2john` script that will take an encrypted zip file and hash it appropriately so we can try to crack it.
 
 ```bash
 git clone https://github.com/magnumripper/JohnTheRipper.git
@@ -490,7 +495,7 @@ A cryptogram! This is a strong signal to go straight to the trusty [quipqiup][].
 
 ![Quipqiup cryptogram results][cryptogram]
 
-Result #4 looks like it is it. _What is the second entry in the RTFM index under the letter T?_ I had left my copy of RTFM at home, but I found [this PDF copy][rtfm] on Github. The index begins on page 95, and the second entry under 'T' is __TCPDump__.
+Result #4 looks like our winner. _What is the second entry in the RTFM index under the letter T?_ I had left my copy of RTFM at home, but I found [this PDF copy][rtfm] on Github. The index begins on page 95, and the second entry under 'T' is __TCPDump__.
 
 ## Forensics
 
@@ -609,9 +614,9 @@ Points: 30
 
 > What is the user's password?
 
-Ok, Window's passwords are stored inside `C:\windows\system32\config\SAM`. I have to figure out how to retrieve the contents of that file through volatility. I need to learn a little bit more about how Windows works. An important concept is the [registry hive][]. In particular, it would be really cool if we could see inside the `HKEY_LOCAL_MACHINE\SAM` hive.
+Ok, Windows' passwords are stored inside `C:\windows\system32\config\SAM`. I have to figure out how to retrieve the contents of that file through volatility. I need to learn a little bit more about how Windows works. The SAM file is locked by the kernel and not accessible when the operating system is booted up. This file is encrypted with a key stored in `C:\windows\system32\config\system` which is similarly locked from access. During boot, Windows will decrypt the values in the SAM file using the key in the system file and load the hashes into the registry. Windows uses NTLM hashes, which are [known to be quite weak][ntlm bad]. An important concept is Windows' [registry hives][]. In particular, it would be really cool if we could see inside the `HKEY_LOCAL_MACHINE\SAM` hive.
 
-Volatility has a [`hivelist` command][hivelist] to locate the virtual addresses of registry hives in memory. We can use the [`hashdump` command][hashdump] to retrieve cached domain credentials. We need to pass `hashdump` the virtual addresses of `\windows\system32\config\SAM` (`-s`) and `\registry\machine\system` (`-y`).
+It turns out, volatility makes this really simple for us. Volatility has a [`hivelist` command][hivelist] to locate the virtual addresses of registry hives in memory. We can then use the [`hashdump` command][hashdump] to retrieve cached domain credentials. We need to pass `hashdump` the virtual addresses of `\windows\system32\config\SAM` (`-s`) and `\registry\machine\system` (`-y`) so volatility can decrypt the hashes.
 
 ```bash
 ➜ volatility --profile=Win7SP1x64 -f memdump.mem hivelist
@@ -650,7 +655,278 @@ sshd_server:1002:aad3b435b51404eeaad3b435b51404ee:8d0a16cfc061c3359db455d00ec270
 CTF-User-Admin:1003:aad3b435b51404eeaad3b435b51404ee:902122102d5d2b0e3221e6ba4a00f7b9:::
 ```
 
-We have the password hashes! But we still need to crack them.
+We have the password hashes! But we still need to crack them. Let's extract the hashes from the output above and move them to a file. The Windows SAM file stores user accounts in the following format: `username:user ID:NTLM hash:LM hash`. LM is an even older hash format than NTLM and is turned off by default on modern Windows machines, however it is still stored in the SAM file. We will extract out the LM hashes (the last value between the colons) as they will be much faster to crack, although if you would prefer you can use the NTLM hashes with minor tweaks to the following commands (as I had to, as you will see).
+
+![Volatility hashdump hashes][]
+
+To crack these hashes we will use [hashcat][]. I installed it with `sudo apt install hashcat`. Hashcat is similar to john the ripper. People claim that there are differences but I don't believe them. We used john in a previous challenge, so let's look at how we would use hashcat:
+
+```bash
+➜ hashcat -O -m 1000 -a 3 forensics_101_ch2_hashes_LM.txt
+
+hashcat (v5.1.0) starting...
+```
+
+The `-O` tells hashcat to optimize the workload to my kernel. The set of hashes is so small this makes no impact, but it's good to know about. We have to tell hashcat what type of hash we're working with along with the level of aggressiveness we want hashcat to work. `-m 1000` tells hashcat that we are giving it NTLM hashes. I said before that we grabbed the LM hashes, but for some reason hashcat was unable to crack them with `-m 3000` (for LM). I'm not sure if hashcat is in the wrong or the hashes in the picture above are actually NTLM. Whatever the case, I cracked them with `-m 1000`. `-a 3` tells hashcat to use the brute-force attack mode.
+
+And off we go.
+
+```bash
+Session..........: hashcat
+Status...........: Running
+Hash.Type........: NTLM
+Hash.Target......: forensics_101_ch2_hashes_LM.txt
+Time.Started.....: Fri Sep 27 20:08:33 2019 (31 secs)
+Time.Estimated...: Fri Sep 27 20:20:54 2019 (11 mins, 50 secs)
+Guess.Mask.......: ?1?2?2?2?2?2?2?3 [8]
+Guess.Charset....: -1 ?l?d?u, -2 ?l?d, -3 ?l?d*!$@_, -4 Undefined 
+Guess.Queue......: 8/15 (53.33%)
+Speed.#1.........:  7466.3 MH/s (9.69ms) @ Accel:256 Loops:128 Thr:256 Vec:1
+Recovered........: 0/4 (0.00%) Digests, 0/1 (0.00%) Salts
+Progress.........: 230744391680/5533380698112 (4.17%)
+Rejected.........: 0/230744391680 (0.00%)
+Restore.Point....: 102891520/2479113216 (4.15%)
+Restore.Sub.#1...: Salt:0 Amplifier:1664-1792 Iteration:0-128
+Candidates.#1....: Iqplb9p$ -> Vsyadnp$
+Hardware.Mon.#1..: Temp: 69c Util: 94% Core:1607MHz Mem:3802MHz Bus:16
+
+[s]tatus [p]ause [b]ypass [c]heckpoint [q]uit => s
+
+Session..........: hashcat
+Status...........: Running
+Hash.Type........: NTLM
+Hash.Target......: forensics_101_ch2_hashes_LM.txt
+Time.Started.....: Fri Sep 27 20:08:33 2019 (3 mins, 55 secs)
+Time.Estimated...: Fri Sep 27 20:20:54 2019 (8 mins, 26 secs)
+Guess.Mask.......: ?1?2?2?2?2?2?2?3 [8]
+Guess.Charset....: -1 ?l?d?u, -2 ?l?d, -3 ?l?d*!$@_, -4 Undefined 
+Guess.Queue......: 8/15 (53.33%)
+Speed.#1.........:  7459.3 MH/s (9.75ms) @ Accel:256 Loops:128 Thr:256 Vec:1
+Recovered........: 0/4 (0.00%) Digests, 0/1 (0.00%) Salts
+Progress.........: 1758325637120/5533380698112 (31.78%)
+Rejected.........: 0/1758325637120 (0.00%)
+Restore.Point....: 787742720/2479113216 (31.78%)
+Restore.Sub.#1...: Salt:0 Amplifier:128-256 Iteration:0-128
+Candidates.#1....: b2r6201@ -> p4ku3e1@
+Hardware.Mon.#1..: Temp: 78c Util: 93% Core:1607MHz Mem:3802MHz Bus:16
+```
+
+About 8 minutes in on my machine, we get our first hit:
+
+![hashcat ctfadmin hash][ctfadmin hash]
+
+One password is __ctfadmin__. If we match this hash to the list of users in the volatility `hashdump` command, we tie this to the ctf-user-admin user. Great! At this point we have solved the challenge, but if you leave hashcat working you will get an additional hash:
+
+```bash
+➜ hashcat -O -m 1000 -a 3 forensics_101_ch2_hashes_LM.txt --show
+
+fc525c9683e8fe067095ba2ddc971889:Passw0rd!
+902122102d5d2b0e3221e6ba4a00f7b9:ctfadmin
+```
+
+`--show` lets us look up the values that hashcat has cracked previously from hashcat's [potfile][hashcat potfile]. Looks like the system administrator's password is `Passw0rd!`. Many secure.
+
+### Forensics 101 (part 3)
+
+Points: 10
+
+> What is the hostname of the system?
+
+Surely somewhere in this memory dump is the hostname of the computer. Sure enough, the internet tells me that the `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName` registry key contains the hostname. Volatility's [`printkey` command][printkey] will let us read the value of this key. We can pass a specific hive to `printkey` with the `-o` option. Let's run `hivelist` again to pull up those virtual addresses:
+
+```bash
+➜ volatility --profile=Win7SP1x64 -f memdump.mem hivelist
+
+Volatility Foundation Volatility Framework 2.6
+Virtual            Physical           Name
+------------------ ------------------ ----
+0xfffff8a004d64010 0x000000002311d010 \SystemRoot\System32\Config\DEFAULT
+0xfffff8a00000f010 0x000000002719a010 [no name]
+0xfffff8a000024010 0x00000000270a5010 \REGISTRY\MACHINE\SYSTEM
+0xfffff8a0000531f0 0x00000000271d41f0 \REGISTRY\MACHINE\HARDWARE
+0xfffff8a000534410 0x0000000024038410 \Device\HarddiskVolume1\Boot\BCD
+0xfffff8a000549010 0x0000000023ff8010 \SystemRoot\System32\Config\SOFTWARE
+0xfffff8a000d21010 0x0000000021127010 \SystemRoot\System32\Config\SECURITY
+0xfffff8a000d93010 0x0000000018bff010 \SystemRoot\System32\Config\SAM
+0xfffff8a000e06010 0x00000000185ff010 \??\C:\Windows\ServiceProfiles\NetworkService\NTUSER.DAT
+0xfffff8a000e98010 0x0000000017f08010 \??\C:\Windows\ServiceProfiles\LocalService\NTUSER.DAT
+0xfffff8a0010c6010 0x0000000010ce9010 \??\C:\Users\sshd_server\ntuser.dat
+0xfffff8a001152010 0x00000000101b7010 \??\C:\Users\sshd_server\AppData\Local\Microsoft\Windows\UsrClass.dat
+0xfffff8a0011cf010 0x000000000f764010 \??\C:\System Volume Information\Syscache.hve
+0xfffff8a0014c0010 0x00000000309e3010 \??\C:\Users\CTF-User-Admin\AppData\Local\Microsoft\Windows\UsrClass.dat
+0xfffff8a001a6b410 0x0000000035afa410 \??\C:\Users\CTF-User-Admin\ntuser.dat
+```
+
+Our key exists under `\REGISTRY\MACHINE\SYSTEM` so let's grab that virtual address and look up our registry key:
+
+```bash
+➜ volatility -f memdump.mem --profile=Win7SP1x64 printkey -o 0xfffff8a000024010 -K 'ControlSet001\Control\ComputerName\ComputerName'
+
+Volatility Foundation Volatility Framework 2.6
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \REGISTRY\MACHINE\SYSTEM
+Key name: ComputerName (S)
+Last updated: 2019-07-26 19:15:19 UTC+0000
+
+Subkeys:
+
+Values:
+REG_SZ                        : (S) mnmsrvc
+REG_SZ        ComputerName    : (S) CTF-WIN-7
+```
+
+We enter our __CTF-WIN-7__ flag and proceed.
+
+### Forensics 101 (part 4)
+
+Points: 10
+
+> There is an odd process running, what is the process name?
+
+Again let's refer to Volatility's [command reference][volatility commands]. The [`pslist` command][pslist] lists the processes of the system.
+
+![Volatility pslist][]
+
+Hmm, __flag449.exe__ seems odd.
+
+Bonus fact: you can discover this through the `consoles` command as well. If you scroll up to where we dump out the recent console activity, you'll see this snippet:
+
+```bash
+C:\Users\CTF-User-Admin>
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1760
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 1 HistoryBufferMax: 4
+OriginalTitle: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+Title: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+AttachedProcess: flag449.exe Pid: 2368 Handle: 0x60
+----
+CommandHistory: 0x21ecb0 Application: flag449.exe Flags: Allocated
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x60
+----
+```
+
+We can see that this executable was recently invoked, no doubt leading to the running process captured in the memory dump.
+
+### Forensics 101 (part 5)
+
+Points: 10
+
+> What was one of the last commands run from the command line?
+
+This is another invocation of `consoles`:
+
+```bash
+➜ volatility --profile=Win7SP1x64 -f memdump.mem consoles
+
+Volatility Foundation Volatility Framework 2.6
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1612
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 2 HistoryBufferMax: 4
+OriginalTitle: -
+Title: -
+----
+CommandHistory: 0x2515a0 Application: - Flags: Allocated
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x58
+----
+CommandHistory: 0x2512f0 Application: cygrunsrv.exe Flags: 
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x0
+----
+Screen 0x26fdd0 X:80 Y:300
+Dump:
+
+**************************************************
+ConsoleProcess: conhost.exe Pid: 744
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 2 HistoryBufferMax: 4
+OriginalTitle: %SystemRoot%\system32\cmd.exe
+Title: Administrator: C:\Windows\system32\cmd.exe
+AttachedProcess: cmd.exe Pid: 1940 Handle: 0x60
+----
+CommandHistory: 0x22ef70 Application: whoami.exe Flags: 
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x0
+----
+CommandHistory: 0x22ec50 Application: cmd.exe Flags: Allocated, Reset
+CommandCount: 1 LastAdded: 0 LastDisplayed: 0
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x60
+Cmd #0 at 0x22d810: whoami
+----
+Screen 0x211100 X:80 Y:300
+Dump:
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Users\CTF-User-Admin>whoami
+ctf-win-7\ctf-user-admin
+
+C:\Users\CTF-User-Admin>
+**************************************************
+ConsoleProcess: conhost.exe Pid: 1760
+Console: 0xffdd6200 CommandHistorySize: 50
+HistoryBufferCount: 1 HistoryBufferMax: 4
+OriginalTitle: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+Title: C:\Users\CTF-User-Admin\Desktop\flag449.exe
+AttachedProcess: flag449.exe Pid: 2368 Handle: 0x60
+----
+CommandHistory: 0x21ecb0 Application: flag449.exe Flags: Allocated
+CommandCount: 0 LastAdded: -1 LastDisplayed: -1
+FirstCommand: 0 CommandCountMax: 50
+ProcessHandle: 0x60
+----
+Screen 0x201170 X:80 Y:300
+Dump:
+Please Enter Password:
+```
+
+We see that __whoami__ was last invoked on the command line.
+
+### Forensics 101 (part 6)
+
+Points: 10
+
+> What is the IP address of the host?
+
+I admit, I guessed with this one until I got the right IP address. There is definitely a "right" way to solve this, and I welcome your comments if you would like to guide me to the light. Here is how I solved it.
+
+Volatility has [several networking commands][volatility networking]. Many are only valid for only versions of Windows. In fact, the only command listed that would run on the `Win7SP1x64` profile was [`netscan`][netscan]. Netscan scans for network artifacts and "finds TCP endpoints, TCP listeners, UDP endpoints, and UDP listeners."
+
+Here is some of the output of `netscan`:
+
+![Volatility netscan][]
+
+I looked for full local IP addresses, like in the line:
+
+```bash
+0x3ddba210         UDPv4    192.168.88.15:1900             *:*                                   1152     svchost.exe    2019-07-26 19:25:38 UTC+0000
+```
+
+I don't remember if that was the correct IP address. I entered several IP addresses from the output of this command until one of them solved the challenge.
+
+...
+
+![Hackercat][]
+
+Hey, I got the points. That's all that matters.
+
+### Firmware Hacked (part 1)
+
+Points: 30
+
+> Someone altered this firmware. Find the flag and submit it.
+
+
 
 [derbycon]: https://www.derbycon.com/
 [hackers movie]: https://en.wikipedia.org/wiki/Hackers_(film)
@@ -692,6 +968,16 @@ We have the password hashes! But we still need to crack them.
 [volatility basics]: https://samsclass.info/121/proj/p4-Volatility.htm
 [volatility sans]: https://blogs.sans.org/computer-forensics/files/2012/04/Memory-Forensics-Cheat-Sheet-v1_2.pdf
 [volatility commands]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference
-[registry hive]: https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-hives
+[registry hives]: https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-hives
 [hivelist]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hivelist
 [hashdump]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hashdump
+[printkey]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#printkey
+[pslist]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#pslist
+[netscan]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#netscan
+[volatility hashdump hashes]: /img/derbycon_boa_ctf/volatility_hashdump_hashcat_2.png
+[ntlm bad]: https://medium.com/@petergombos/lm-ntlm-net-ntlmv2-oh-my-a9b235c58ed4
+[ctfadmin hash]: /img/derbycon_boa_ctf/hashcat_ctfadmin.png
+[hashcat potfile]: https://hashcat.net/wiki/doku.php?id=frequently_asked_questions#what_is_a_potfile
+[volatility pslist]: /img/derbycon_boa_ctf/volatility_pslist.png
+[volatility networking]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#networking
+[volatility netscan]: /img/derbycon_boa_ctf/volatility_netscan.png
