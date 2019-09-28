@@ -1094,7 +1094,7 @@ $TY-08-21 10:09:41.0000000000 _Firmware.extracted/watch
 ...
 ```
 
-Ahh, we needed to reverse the sort to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog. I'm not getting accurate results from this.
+Ahh, we needed to reverse the sort to get the most recently modified files. It is unlikely that the `authorize` file is actually what we need since it was not recently modified. At the very least, I didn't see anything that screamed "flag." Now we have a more updated list of modified files. Wait...but no, those 9/27 files correspond to the day I re-ran this exercise when writing this blog (similarly, I had dates day-of when going through this exercise during Derbycon). I'm not getting accurate results from this.
 
 At this point, a couple of hours into this challenge, I was very frustrated and running whatever querying commands I could think of.
 
