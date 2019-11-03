@@ -13,7 +13,7 @@ Often when working with large Ansible playbooks you'll encounter the need to dup
 
 > Collections are a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.
 
-Previously, Ansible Galaxy was a hub for community-developed roles - a discrete playbook of tasks that will all execute to reuse of common configuration steps. Now, the community can upload a Collection of roles, playbooks, modules, or plugins and invoke each individually in their own playbook, as they like.
+Previously, Ansible Galaxy was a hub for community-developed roles - a discrete playbook of tasks to reuse of common configuration steps. A role executes all of the tasks inside it. Now, the community can upload a Collection of roles, playbooks, modules, or plugins and invoke each individually in their own playbook, as they like.
 
 - [Collection structure](#collection-structure)
 - [The galaxy.yml file](#the-galaxyyml-file)
@@ -515,7 +515,7 @@ And we are done! If we publish a new release we can see our workflow executes an
 
 You can find my action to deploy a collection to Ansible Galaxy [on the GitHub Actions Marketplace][actions marketplace]. The repository for my `github_version` collection is [here][github_version repo]. You can use this collection in your own playbooks by [installing it from Ansible Galaxy][github_version galaxy].
 
-I also welcome your input on an [open issue][github_version name] in my collection. Using a custom collection is pretty verbose (`lookup('arits3n.github_version.github_version)`). Ansible requires this format, so how should I make this less horrible to read? My current thought is to rename my collection to `github` and then call this lookup plugin `release_version` so it would be invoked as `lookup('artis3n.github.release_version')`. What do you think?
+I also welcome your input on an [open issue][github_version name] in my collection. Using a custom collection is pretty verbose (`lookup('artis3n.github_version.github_version)`). Ansible requires this format, so how should I make this less horrible to read? My current thought is to rename my collection to `github` and then call this lookup plugin `release_version` so it would be invoked as `lookup('artis3n.github.release_version')`. What do you think?
 
 [part 1]: /2019-11-02-creating-a-custom-ansible-plugin/
 [ansible collections]: https://docs.ansible.com/ansible/devel/user_guide/collections_using.html
