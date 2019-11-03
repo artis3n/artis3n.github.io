@@ -510,7 +510,7 @@ Assuming our plugin is located at `lookup_plugins/github_version.py` in our proj
 
 Now that we have written our custom plugin, what next? We can package our plugin into an [Ansible Collection][] and upload it to Ansible Galaxy for other users to import into their playbooks. This requires some minor refactors to our plugin setup, which we will discuss in [part 2][] of this series. We will also discuss how to build a [Github Action][] and use one that I created to automatically bundle your collection and upload it to Ansible Galaxy.
 
-[github_version]: ttps://github.com/artis3n/github_version-ansible_plugin/blob/master/plugins/lookup/github_version.py
+[github_version]: https://github.com/artis3n/github_version-ansible_plugin/blob/master/plugins/lookup/github_version.py
 [developing plugins]: https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html
 [lookup plugin]: https://docs.ansible.com/ansible/latest/plugins/lookup.html
 [plugin types]: https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#developing-particular-plugin-types

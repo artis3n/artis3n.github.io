@@ -530,7 +530,7 @@ I also welcome your input on an [open issue][github_version name] in my collecti
 [github actions workflow]: https://help.github.com/en/github/automating-your-workflow-with-github-actions
 [github actions syntax]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 [github actions building]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/building-actions
-[action on github]: https://github.com/artis3n/github_version-ansible_plugin/blob/master/.github/workflows/ansiblegalaxy.yml
+[action on github]: https://github.com/artis3n/ansible_galaxy_collection
 [github actions name]: /img/ansible_galaxy_collection/github_actions_name.png
 [supported OS's]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/virtual-environments-for-github-actions#supported-virtual-environments-and-hardware-resources
 [github learning lab]: https://lab.github.com/github/hello-github-actions!
