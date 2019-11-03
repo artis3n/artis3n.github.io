@@ -435,7 +435,7 @@ jobs:
   deploy:
 ```
 
-You must specify what type of virtual machine to run the job on. You did this with the `run-on` keyword. The supported operating systems can be found [here][supported OS's]. Each jobs runs with a fresh instance of the virtual environment.
+You must specify what type of virtual machine to run the job on. You do this with the `run-on` keyword. The supported operating systems can be found [here][supported OS's]. Each jobs runs with a fresh instance of the virtual environment.
 
 ```yaml
 runs-on: ubuntu-latest
@@ -464,7 +464,7 @@ steps:
         api_key: ${% raw %}{{ secrets.GALAXY_API_KEY }}{% endraw %}
 ```
 
-In the above steps we check out out repository and install Python, Pip, and Ansible. We then invoke our GitHub Action to publish to Galaxy, `artis3n/ansible_galaxy_collection`. This action takes a required input parameter, which we specify with `with`.
+In the above steps we check out the repository and install Python, Pip, and Ansible. We then invoke our GitHub Action to publish to Galaxy, `artis3n/ansible_galaxy_collection`. This action takes a required input parameter, which we specify with `with`.
 
 You'll notice that I am providing a variable to the `api_key` parameter from something called "secrets." This is a new capability in GitHub with the introduction of Actions. You can [store encrypted secret values][github secrets] in your repo encrypted via [NaCl][]. Our `ansible_galaxy_collection` action requires your Ansible Galaxy API key. Store it in your repo's Secrets and reference it in your workflow via `${% raw %}{{ secrets.<SECRET NAME> }}{% endraw %}`. Secrets are not passed to forks of your repository.
 
