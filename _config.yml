@@ -4,7 +4,7 @@
 title: Quantum Madness
 
 # Short description of your site
-description: Musings and research on cryptography and software development.
+description: Artisanal musings on software development, application security, and cryptography.
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
@@ -25,7 +25,7 @@ navbar-links:
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/img/q.jpg"
+avatar: "/img/bonk.jpg"
 
 # If you want to have an image logo in the top-left corner instead of the title text,
 # then specify the following parameter
