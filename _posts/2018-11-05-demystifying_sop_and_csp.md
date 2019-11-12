@@ -25,9 +25,9 @@ The Same Origin Policy (SOP) is really the base of the web security model. Under
 
 SOP will group resources under the same origin if they have the same three properties:
 
-1) Host
-2) Protocol
-3) Port
+1. Host
+1. Protocol
+1. Port
 
 The following interactions are prevented due to SOP:
 
@@ -104,9 +104,13 @@ A CORS policy is set on the `Access-Control-Allow-Origin` header. In this header
 
 Some request methods require an additional preflight request to be sent before making the cross-origin request. A [preflight request][preflight] is an OPTIONS request automatically issued by a browser. This occurs when making a cross-origin request that changes state, with a request method other than GET or POST or when using certain non-whitelisted headers. The details are outlined [here][preflight details] but, again, your browser will issue this automatically as needed.
 
-### Follow-up on CORS
+## Follow-up on CORS
 
-For more information on CORS, I recommend [this site][cors followup], which contains a wealth of additional resources.
+For more information on CORS, I strongly recommend this video from Derbycon 2019: "To CORS, The Cause and Solution to Your SPA Problems."
+
+[![CORS video](http://img.youtube.com/vi/tH-HG4b4GYQ/0.jpg)](http://www.youtube.com/watch?v=tH-HG4b4GYQ "To CORS: The Cause of and Solution to Your SPA Problems")
+
+The presenters explain CORS in the most understandable format I've yet seen and show how nearly _every_ language's CORS libraries set insecure CORS defaults.
 
 ## Content Security Policy
 
