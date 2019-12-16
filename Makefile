@@ -14,4 +14,4 @@ update:
 
 .PHONY: local
 local:
-	bundle exec jekyll serve --drafts
+	bundle exec jekyll serve --drafts --incremental

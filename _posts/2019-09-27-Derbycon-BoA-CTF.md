@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Derbycon 9: Bank of America CTF"
+title: "Writeup: Derbycon 9 - Bank of America CTF"
 description: "A write up of some of the challenges in this jeopardy-style CTF from Derbycon 9."
 tags: pentest ctf
 ---
