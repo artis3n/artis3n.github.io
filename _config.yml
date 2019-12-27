@@ -1,7 +1,7 @@
 # --- General options --- #
 
 # Name of website
-title: Quantum Madness
+title: Artis3nal Mistakes
 
 # Short description of your site
 description: Artisanal musings on software development, application security, and cryptography.
@@ -11,7 +11,7 @@ description: Artisanal musings on software development, application security, an
 # *** If you're not sure what this mean, then leave this section as it is. Only modify the url and baseurl if you know what you're doing!***
 
 # url is the the website domain URL without a trailing slash
-url: "https://blog.quantummadness.com"
+url: "https://blog.artis3nal.com"
 
 # baseurl should be an empty string
 baseurl: ""
@@ -65,7 +65,7 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
   rss: true
-  email: "artis3n@quantummadness.com"
+  email: "dev@artis3nal.com"
   #facebook: deanattali
   github: artis3n
   twitter: artis3n
@@ -90,7 +90,7 @@ share-links-active:
 
 # How to display the link to the website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "QuantumMadness.com"  # eg. "deanattali.com/beautiful-jekyll"
+url-pretty: "Artis3nal.com"  # eg. "deanattali.com/beautiful-jekyll"
 
 # --- Web Statistics Section --- #
 
