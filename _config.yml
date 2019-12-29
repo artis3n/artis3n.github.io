@@ -4,7 +4,7 @@
 title: Artis3nal Mistakes
 
 # Short description of your site
-description: Artisanal musings on software development, application security, and cryptography.
+description: Thoughts on software development, application security, and cryptography.
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
@@ -20,6 +20,7 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
+  Topics: "/tags"
   About Me: "aboutme"
   Author's home: "https://dev.to/artis3n"
 
@@ -39,7 +40,7 @@ navbar-col: "#412e48"
 navbar-text-col: "#bdd5ea"
 navbar-children-col: "#412e48"
 page-col: "#f7f7ff"
-link-col: "#bdd5ea"
+link-col: "#55dde0"
 hover-col: "#fe5f55"
 footer-col: "#412e48"
 footer-text-col: "#bdd5ea"

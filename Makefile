@@ -13,5 +13,9 @@ update:
 	bundle update
 
 .PHONY: local
-local:
+local: clean
 	bundle exec jekyll serve --drafts --incremental
+
+.PHONY: clean
+clean:
+	bundle exec jekyll clean
