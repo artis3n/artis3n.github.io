@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-subtitle: Artisanal musings on software development, application security, and cryptography.
+subtitle: Thoughts on software development, application security, and cryptography.
 ---
 
 I am a cyber security engineer performing penetration tests and writing secure software. This means the posts will

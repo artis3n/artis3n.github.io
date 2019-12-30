@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.6.5'
 
-gem 'github-pages', '202', group: :jekyll_plugins
+gem 'github-pages', '203', group: :jekyll_plugins
 
 gem 'jekyll-paginate'
 # enable tzinfo-data for local build

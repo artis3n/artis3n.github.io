@@ -4,7 +4,7 @@
 title: Artis3nal Mistakes
 
 # Short description of your site
-description: Artisanal musings on software development, application security, and cryptography.
+description: Thoughts on software development, application security, and cryptography.
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
@@ -20,6 +20,7 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
+  Topics: "/tags"
   About Me: "aboutme"
   Author's home: "https://dev.to/artis3n"
 
@@ -35,15 +36,15 @@ avatar: "/img/bonk.jpg"
 
 # Personalize the colors in your website. Colour values can be any valid CSS colour
 
-navbar-col: "#F5F5F5"
-navbar-text-col: "#404040"
-navbar-children-col: "#F5F5F5"
-page-col: "#FFFFFF"
-link-col: "#008AFF"
-hover-col: "#0085A1"
-footer-col: "#F5F5F5"
-footer-text-col: "#777777"
-footer-link-col: "#404040"
+navbar-col: "#412e48"
+navbar-text-col: "#bdd5ea"
+navbar-children-col: "#412e48"
+page-col: "#f7f7ff"
+link-col: "#23b2b5"
+hover-col: "#fe5f55"
+footer-col: "#412e48"
+footer-text-col: "#bdd5ea"
+footer-link-col: "#bdd5ea"
 
 # Alternatively, the navbar, footer, and page background can be set to use background images
 # instead of colour
@@ -107,15 +108,16 @@ url-pretty: "Artis3nal.com"  # eg. "deanattali.com/beautiful-jekyll"
 # Uncomment the following section to enable Matomo. The opt-out parameter controls
 # whether or not you want to allow users to opt out of tracking.
 
-#matomo:
-#  site_id: "9"
-#  uri: "demo.wiki.pro"
-#  opt-out: true
+matomo:
+  site_id: "1"
+  domain: "*.artis3nal.com"
+  uri: "analytics.artis3nal.com"
+  opt-out: true
 
 # --- Comments --- #
 
 # Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
-disqus: "quantummadness"
+disqus: "artis3nal"
 
 # If you want to use JustComments fill with the API Key
 #just-comments: "ABCD-EFGH-IJKL"
