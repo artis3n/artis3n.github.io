@@ -2,7 +2,7 @@
 layout: post
 title: "Writeup: SANS Holiday Hack Challenge 2019"
 description: "A writeup of some of the challenges in this 2D CTF game."
-tags: pentest ctf
+tags: pentest ctf writeup
 image: /img/kringlecon_2019/kringlecon_logo.png
 ---
 
