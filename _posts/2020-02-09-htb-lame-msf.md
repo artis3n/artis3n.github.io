@@ -6,6 +6,8 @@ tags: pentest hackthebox writeup
 ---
 
 This series will follow my exercises in [HackTheBox][].
+All published writeups are for retired HTB machines.
+It is against their rules to publish a writeup for an active machine.
 Whether or not I use Metasploit to pwn the server will be indicated in the title.
 
 # Lame
@@ -41,7 +43,7 @@ Let's see if autorecon has completed.
 It has, and I've discovered another open service - distccd on `TCP/3632`.
 Let's see what additional discovery autorecon has launched against this open port.
 I can see that it ran an nmap scan with the following NSE scripts: `--script=banner,distcc-cve2004-2687 --script-args=distcc-cve2004-2687.cmd=id`.
-And our target is vulnerable!
+And the target is vulnerable!
 
 ![distccd-vuln][]
 
@@ -49,7 +51,7 @@ And our target is vulnerable!
 Let's see what I have to work with.
 Let's open Metasploit.
 Starting with Kali 2020.1, remember that you should run `sudo msfconsole` to give Metasploit sudo privileges, which are required for some exploits.
-Let's also create a workspace for our target.
+I'll also create a workspace for the target.
 
 ![msf-workspace][]
 
@@ -58,7 +60,7 @@ Now let's see whether there is anything related to distccd in Metasploit already
 ![msf-search-distccd][]
 
 Great! There's a ready-to-go exploit for command execution against the distccd daemon for the vulnerability I discovered from nmap.
-Let's use the exploit and configure it against our target, `10.10.10.3`.
+Let's use the exploit and configure it against the target, `10.10.10.3`.
 
 ![msf-distccd-exploit-options][]
 
@@ -102,7 +104,7 @@ A quick [Google search][netlink google] tells me that I can find the Netlink pro
 ![netlink-pids][]
 
 I'll save `2687` for later.
-Now I need to compile the exploit and get it onto my target.
+Now I need to get the exploit onto my target and compile it.
 Let's host the uncompiled exploit on a local web server.
 I can verify it is available with a curl command.
 
@@ -112,11 +114,11 @@ I retrieve the exploit code on my user shell on the target machine with wget.
 
 ![wget-exploit][]
 
-And now we can compile it on the target, to ensure it is compiled for the right architecture.
+And now I can compile it on the target, which ensures it is compiled for the right architecture.
 
 ![compiled-exploit][]
 
-Now we need to add a payload to `/tmp/run`.
+Now I need to add a payload to `/tmp/run`.
 I'd like for the target to create a reverse listener and have it connect to my machine.
 Let's add the payload.
 
@@ -127,8 +129,8 @@ Now let's set up a listener on our machine.
 ![nc local][]
 
 This tells netcat to listen on local port 5555 without performing DNS resolution.
-We also use `-v` for verbose output.
-Now we can run our exploit with our retrieved PID of `2687`.
+I also use `-v` for verbose output.
+Now I can run our exploit with my retrieved PID of `2687`.
 
 Target:
 
@@ -138,8 +140,8 @@ Local:
 
 ![nc shell][]
 
-And there we have it.
-We can now retrieve the root flag.
+And there it is.
+I can now retrieve the root flag.
 
 ![root-shell][]
 
@@ -151,11 +153,12 @@ We can use Metasploit's `exploit/multi/samba/usermap_script` exploit.
 
 ![samba exploit][]
 
-And just like that, we have a root shell on the machine.
-From here we can read the user flag and root flag with no additional work.
+And just like that, I have a root shell on the machine.
+From here I can read the user flag and root flag with no additional work.
 
 I will say I do like my method for this initial box, as I had to do much more 'work' myself and understand what was happening.
 That being said, it took me about 30 minutes to complete this box when it could have taken about 1 minute!
+I imagine my technique to root this box without Metasploit will closely resemble my method above.
 
 [autorecon]: https://github.com/Tib3rius/AutoRecon
 [hackthebox]: https://www.hackthebox.eu
