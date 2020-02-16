@@ -11,6 +11,8 @@ Whether or not I use Metasploit to pwn the server will be indicated in the title
 
 # Legacy
 
+_<small>Difficulty: Easy</small>_
+
 _<small>Machine IP: 10.10.10.4</small>_
 
 As always, I start enumeration with [AutoRecon][].
