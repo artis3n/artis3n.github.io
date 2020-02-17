@@ -5,9 +5,8 @@ description: "Rooting Devel using Metasploit."
 tags: pentest hackthebox writeup
 ---
 
-This series will follow my exercises in [HackTheBox][].
-All published writeups are for retired HTB machines.
-Whether or not I use Metasploit to pwn the server will be indicated in the title.
+This series will follow my exercises in [HackTheBox][]. All published writeups are for retired HTB machines. Whether
+ or not I use Metasploit to pwn the server will be indicated in the title.
 
 # Devel
 

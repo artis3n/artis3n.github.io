@@ -5,10 +5,9 @@ description: "Rooting Lame using Metasploit."
 tags: pentest hackthebox writeup
 ---
 
-This series will follow my exercises in [HackTheBox][].
-All published writeups are for retired HTB machines.
-It is against their rules to publish a writeup for an active machine.
-Whether or not I use Metasploit to pwn the server will be indicated in the title.
+This series will follow my exercises in [HackTheBox][]. All published writeups are for retired HTB machines. It is
+ against their rules to publish a writeup for an active machine. Whether or not I use Metasploit to pwn the server
+  will be indicated in the title.
 
 # Lame
 
