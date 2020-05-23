@@ -149,7 +149,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
 I poke at the `/configs`, which contain come config files but do not render in the browser, and `/admin`, which prompts me for Basic Auth credentials.
 I try some defaults like `admin/admin` but do not get anywhere.
 
-I see `/vigercrm` at the end, let's dig into that...
+I see `/vtigercrm` at the end, let's dig into that...
 
 Navigating to `https://10.10.10.7/vtigercrm/index.php`, we see a login for a CRM page.
 The footer of the page contains: `vtiger CRM 5.1.0`.
