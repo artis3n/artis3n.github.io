@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Writeup: HackTheBox Optimum - with Metasploit"
-description: "Rooting Beep using Metasploit."
+description: "Rooting Optimum using Metasploit."
 tags: pentest hackthebox writeup
 ---
 

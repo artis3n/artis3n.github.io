@@ -108,7 +108,7 @@ Some request methods require an additional preflight request to be sent before m
 
 For more information on CORS, I strongly recommend this video from Derbycon 2019: "To CORS, The Cause and Solution to Your SPA Problems."
 
-[![CORS video](http://img.youtube.com/vi/tH-HG4b4GYQ/0.jpg)](http://www.youtube.com/watch?v=tH-HG4b4GYQ "To CORS: The Cause of and Solution to Your SPA Problems")
+[![CORS video](https://img.youtube.com/vi/tH-HG4b4GYQ/0.jpg)](https://www.youtube.com/watch?v=tH-HG4b4GYQ "To CORS: The Cause of and Solution to Your SPA Problems")
 
 The presenters explain CORS in the most understandable format I've yet seen and show how nearly _every_ language's CORS libraries set insecure CORS defaults.
 
