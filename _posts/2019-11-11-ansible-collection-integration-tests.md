@@ -193,4 +193,4 @@ We can now test our custom collection locally and ensure all changes run through
 [part 2]: /2019-11-02-github-action-ansible-galaxy-collection/
 [geerlingguy molecule]: https://www.jeffgeerling.com/blog/2019/how-add-integration-tests-ansible-collection-molecule
 [ansible assert]: https://docs.ansible.com/ansible/latest/modules/assert_module.html
-[molecule workflow]: /img/ansible_galaxy_collection/molecule_workflow.png
+[molecule workflow]: /assets/img/ansible_galaxy_collection/molecule_workflow.png

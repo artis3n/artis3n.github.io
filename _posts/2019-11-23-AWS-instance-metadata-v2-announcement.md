@@ -118,11 +118,11 @@ That's it! SSRF is now effectively mitigated. Do you own an API product and want
 [cloudgoat]: https://github.com/RhinoSecurityLabs/cloudgoat
 [cloud_breach_s3]: https://rhinosecuritylabs.com/aws/capital-one-cloud_breach_s3-cloudgoat/
 
-[cloudbreach s3 gif]: /img/instance_metadata_v2/cloud_breach_s3.gif
-[initial ip]: /img/instance_metadata_v2/initial_ip.png
-[discover iam profile]: /img/instance_metadata_v2/discover_iam_profile.png
-[retrieve sts creds]: /img/instance_metadata_v2/retrieve_sts_creds.png
-[configure cli]: /img/instance_metadata_v2/configure_cli.png
-[add session token]: /img/instance_metadata_v2/add_session_token.png
-[download data]: /img/instance_metadata_v2/download_data.png
-[win]: /img/instance_metadata_v2/win.png
+[cloudbreach s3 gif]: /assets/img/instance_metadata_v2/cloud_breach_s3.gif
+[initial ip]: /assets/img/instance_metadata_v2/initial_ip.png
+[discover iam profile]: /assets/img/instance_metadata_v2/discover_iam_profile.png
+[retrieve sts creds]: /assets/img/instance_metadata_v2/retrieve_sts_creds.png
+[configure cli]: /assets/img/instance_metadata_v2/configure_cli.png
+[add session token]: /assets/img/instance_metadata_v2/add_session_token.png
+[download data]: /assets/img/instance_metadata_v2/download_data.png
+[win]: /assets/img/instance_metadata_v2/win.png

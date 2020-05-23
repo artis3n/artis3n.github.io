@@ -5,7 +5,7 @@ description: "An overview of the post-quantum cryptography function Supersingula
 tags: quantum crypto
 ---
 
-![Fractal header](/img/quantum_cryptography/fractal_header.jpg)
+![Fractal header](/assets/img/quantum_cryptography/fractal_header.jpg)
 
 In the [first part][pqc1] of this series, I discussed some basics of quantum mechanics and how they apply to quantum computing. In this part, I'll continue that discussion by examining the proposed families of post-quantum functions, beginning with Supersingular Isogeny Diffie-Hellman.
 
@@ -25,7 +25,7 @@ SIDH works with a family of elliptic curves that are supersingular and isogenous
 
 Now that we have an understanding of the key exchange process using SIDH, let's look at the advantages and disadvantages of using this PQC function. Most importantly, what is the security guarantee of SIDH? The current research describes the hardness of breaking SIDH, which is the hardness of computing an isogeny between isogenous supersingular elliptic curves, at:
 
-![Hardness of breaking SIDH](/img/sidh/sidh_hardness.jpg)
+![Hardness of breaking SIDH](/assets/img/sidh/sidh_hardness.jpg)
 
 where _p_ is some long number, e.g. a 768-bit number _2 * 2<sup>386</sup> * 3<sup>242</sup> - 1_ for 128-bit security. As we can see, the hardness difference between a classical computer and a quantum computer is very small, thereby successfully mitigating the threat of quantum computing on secure key exchange.
 

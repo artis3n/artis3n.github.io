@@ -31,19 +31,19 @@ SOP will group resources under the same origin if they have the same three prope
 
 The following interactions are prevented due to SOP:
 
-![Different host SOP violation](/img/sop_csp/sop_host_malicious.svg)
+![Different host SOP violation](/assets/img/sop_csp/sop_host_malicious.svg)
 
 Since mysite.com and malicious.com are clearly different hosts, SOP blocks data sharing between these separate origins.
 
-![Different protocol SOP violation](/img/sop_csp/sop_protocol.svg)
+![Different protocol SOP violation](/assets/img/sop_csp/sop_protocol.svg)
 
 Even though we are now under the same host, HTTPS and HTTP are different protocols, so SOP prevents data interaction and separates these two origins.
 
-![Different port SOP violation](/img/sop_csp/sop_port.svg)
+![Different port SOP violation](/assets/img/sop_csp/sop_port.svg)
 
 Since 443 and 4443 are different ports, SOP blocks data interaction and separates these two origins.
 
-![Different subdomain SOP violation](/img/sop_csp/sop_host_mysite.svg)
+![Different subdomain SOP violation](/asssets/img/sop_csp/sop_host_mysite.svg)
 
 Similar to the first example, subdomains are considered separate hosts. SOP will block data interaction between two subdomains.
 
@@ -63,15 +63,15 @@ document.domain = "mysite.com"
 
 Since __mysite.com__ is a superdomain of __a.mysite.com__, this setting is allowed (same for __b.mysite.com__). You are forbidden from changing your document's domain to one that you do not control. Running `document.domain = "google.com"` on the site __a.mysite.com__ will fail.
 
-![SOP superdomain violation prevented](/img/sop_csp/sop_domain_violation.svg)
+![SOP superdomain violation prevented](/assets/img/sop_csp/sop_domain_violation.svg)
 
 If both __a.mysite.com__ and __b.mysite.com__ change their document's domain to the same superdomain, suddenly both share the same host, port, and protocol, and SOP will allow data sharing.
 
-![SOP superdomain escalation successful](/img/sop_csp/sop_domain_changed.svg)
+![SOP superdomain escalation successful](/assets/img/sop_csp/sop_domain_changed.svg)
 
 Note that the site's port is held separately by the browser. Any time a call is made to set the value of `document.domain`, the domain's port value for SOP is set to `null`. This is done to prevent a situation where __a.mysite.com__ wants to modify data on __mysite.com__, so __a.mysite.com__ changes it's `document.domain` to `mysite.com`. The host value now matches, but __mysite.com__ may not want to give a subdomain permission to read or modify its content. Since a call to set `document.domain` was made on __a.mysite.com__, that subdomain's port value was set to `null`. If __mysite.com__ does not similarly make a call to set `document.domain = "mysite.com"` (yes, even though it's already `mysite.com`), then the port values for __a.mysite.com__ (`null`) and __mysite.com__ (80 or 443, presumably) will not match, ensuring SOP continues to prevent data sharing.
 
-![SOP superdomain escalation failed](/img/sop_csp/sop_domain_failed.svg)
+![SOP superdomain escalation failed](/assets/img/sop_csp/sop_domain_failed.svg)
 
 <!-- markdownlint-disable MD026 -->
 ### So what does SOP allow?

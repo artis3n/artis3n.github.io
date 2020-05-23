@@ -113,5 +113,5 @@ The third exploit, `exploit/windows/local/ms10_092_schelevator`, is successful a
 
 [coldfusion]: https://coldfusion.adobe.com
 [gobuster]: https://github.com/OJ/gobuster
-[msf module modify]: /img/htb/arctic/msf-module-modify-timeout.png
+[msf module modify]: /assets/img/htb/arctic/msf-module-modify-timeout.png
 [priv sug]: https://null-byte.wonderhowto.com/how-to/get-root-with-metasploits-local-exploit-suggester-0199463/

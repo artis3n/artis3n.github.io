@@ -5,7 +5,7 @@ description: "In which we establish a baseline of knowledge on quantum mechanics
 tags: quantum crypto
 ---
 
-![Quantum header](/img/quantum_cryptography/quantum_header.jpg)
+![Quantum header](/assets/img/quantum_cryptography/quantum_header.jpg)
 > Anyone who can contemplate quantum mechanics without getting dizzy hasn't understood it.
 
 \- _Niels Bohr, one of the fathers of quantum mechanics_

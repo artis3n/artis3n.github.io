@@ -47,11 +47,11 @@ From here I can read the user and root's flags with ease (ignoring some Windows 
 [hackthebox]: https://www.hackthebox.eu
 [ms08_67]: https://docs.microsoft.com/en-us/security-updates/securitybulletins/2008/ms08-067
 
-[autorecon results]: /img/htb/legacy/autorecon.png
-[msf exploit]: /img/htb/legacy/msf-exploit-options.png
-[msf search]: /img/htb/legacy/msf-search-smb.png
-[nmap results]: /img/htb/legacy/full-nmap-results.png
-[nmap script results]: /img/htb/legacy/full-nmap-script-results.png
-[user flag]: /img/htb/legacy/user-flag.png
-[root flag]: /img/htb/legacy/root-flag.png
-[root shell]: /img/htb/legacy/root-shell.png
+[autorecon results]: /assets/img/htb/legacy/autorecon.png
+[msf exploit]: /assets/img/htb/legacy/msf-exploit-options.png
+[msf search]: /assets/img/htb/legacy/msf-search-smb.png
+[nmap results]: /assets/img/htb/legacy/full-nmap-results.png
+[nmap script results]: /assets/img/htb/legacy/full-nmap-script-results.png
+[user flag]: /assets/img/htb/legacy/user-flag.png
+[root flag]: /assets/img/htb/legacy/root-flag.png
+[root shell]: /assets/img/htb/legacy/root-shell.png

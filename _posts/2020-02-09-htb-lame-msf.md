@@ -165,28 +165,28 @@ I imagine my technique to root this box without Metasploit will closely resemble
 [hackthebox]: https://www.hackthebox.eu
 [netlink google]: https://unix.stackexchange.com/a/48269
 
-[autorecon-start]: /img/htb/lame/autorecon-start.png
-[autorecon-end]: /img/htb/lame/autorecon-end.png
-[autorecon-scans]: /img/htb/lame/autorecon-results-scan.png
-[compiled-exploit]: /img/htb/lame/exploit-compiled.png
-[escalation payload]: /img/htb/lame/escalation-payload.png
-[escalation run]: /img/htb/lame/target-escalation-run.png
-[distccd-vuln]: /img/htb/lame/nmap-distccd-vuln.png
-[ftp]: /img/htb/lame/ftp.png
-[host-exploit]: /img/htb/lame/host-exploit-uncompiled.png
-[msf-distccd-exploit-options]: /img/htb/lame/msf-distccd-exploit-options.png
-[msf-user-shell]: /img/htb/lame/msf-exploit-success-user.png
-[msf-search-distccd]: /img/htb/lame/msf-search-distccd.png
-[msf-target-dead]: /img/htb/lame/msf-run-deadserver.png
-[msf-workspace]: /img/htb/lame/msf-workspace.png
-[nc local]: /img/htb/lame/nc-local.png
-[nc shell]: /img/htb/lame/nc-local-root-shell.png
-[netlink-pids]: /img/htb/lame/netlink-pids.png
-[quick-tcp]: /img/htb/lame/autorecon-nmap-quick-results.png
-[root-shell]: /img/htb/lame/root-flag.png
-[samba exploit]: /img/htb/lame/samba-msf.png
-[searchsploit-udev]: /img/htb/lame/searchsploit-udev.png
-[udev-exploit-code]: /img/htb/lame/udev-exploit-code.png
-[udev-services]: /img/htb/lame/ps-aux-udev.png
-[user-shell]: /img/htb/lame/user-flag.png
-[wget-exploit]: /img/htb/lame/wget-lame.png
+[autorecon-start]: /assets/img/htb/lame/autorecon-start.png
+[autorecon-end]: /assets/img/htb/lame/autorecon-end.png
+[autorecon-scans]: /assets/img/htb/lame/autorecon-results-scan.png
+[compiled-exploit]: /assets/img/htb/lame/exploit-compiled.png
+[escalation payload]: /assets/img/htb/lame/escalation-payload.png
+[escalation run]: /assets/img/htb/lame/target-escalation-run.png
+[distccd-vuln]: /assets/img/htb/lame/nmap-distccd-vuln.png
+[ftp]: /assets/img/htb/lame/ftp.png
+[host-exploit]: /assets/img/htb/lame/host-exploit-uncompiled.png
+[msf-distccd-exploit-options]: /assets/img/htb/lame/msf-distccd-exploit-options.png
+[msf-user-shell]: /assets/img/htb/lame/msf-exploit-success-user.png
+[msf-search-distccd]: /assets/img/htb/lame/msf-search-distccd.png
+[msf-target-dead]: /assets/img/htb/lame/msf-run-deadserver.png
+[msf-workspace]: /assets/img/htb/lame/msf-workspace.png
+[nc local]: /assets/img/htb/lame/nc-local.png
+[nc shell]: /assets/img/htb/lame/nc-local-root-shell.png
+[netlink-pids]: /assets/img/htb/lame/netlink-pids.png
+[quick-tcp]: /assets/img/htb/lame/autorecon-nmap-quick-results.png
+[root-shell]: /assets/img/htb/lame/root-flag.png
+[samba exploit]: /assets/img/htb/lame/samba-msf.png
+[searchsploit-udev]: /assets/img/htb/lame/searchsploit-udev.png
+[udev-exploit-code]: /assets/img/htb/lame/udev-exploit-code.png
+[udev-services]: /assets/img/htb/lame/ps-aux-udev.png
+[user-shell]: /assets/img/htb/lame/user-flag.png
+[wget-exploit]: /assets/img/htb/lame/wget-lame.png

@@ -202,7 +202,7 @@ Don't forget the null terminator `%00` at the end of the request like I did.
 
 This gives us a large dump of information.
 
-![amportal.conf file contents](/img/htb/beep/pbx-password.png)
+![amportal.conf file contents](/assets/img/htb/beep/pbx-password.png)
 
 The file contains a password at `AMPDBUSER=asteriskuser AMPDBPASS=jEhdIekWmdjE`.
 I also notice `AMPMGRUSER=admin AMPMGRPASS=jEhdIekWmdjE`.

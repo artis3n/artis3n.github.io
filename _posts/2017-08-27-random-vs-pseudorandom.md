@@ -5,7 +5,7 @@ description: "In which we discuss randomness in cryptography and software develo
 tags: crypto
 ---
 
-![XKCD Random Number](/img/random_pseudorandom/random_number.png)
+![XKCD Random Number](/assets/img/random_pseudorandom/random_number.png)
 <small>source: [https://www.xkcd.com/221/][xkcd]</small>
 
 [xkcd]: https://www.xkcd.com/221/
@@ -39,15 +39,15 @@ Faced with this problem of key size, cryptographers came up with the idea of pse
 [pseudorandom generator]: https://en.wikipedia.org/wiki/Pseudorandom_generator
 [PRFs and PRPs]: http://www.crypto-it.net/eng/theory/prf-and-prp.html
 
-![Uniform distribution set](/img/random_pseudorandom/universe_set.png)
-![Lemma for computational indistinguishability](/img/random_pseudorandom/computational_indistinguishable.png)
+![Uniform distribution set](/assets/img/random_pseudorandom/universe_set.png)
+![Lemma for computational indistinguishability](/assets/img/random_pseudorandom/computational_indistinguishable.png)
 
 Let us say our pseudorandom function is P<sub>1</sub> and our random function is P<sub>2</sub>. Let us set P<sub>1</sub> and P<sub>2</sub> to be two distributions over the set `U` described above. This lemma says that we achieve computational indistinguishability when the probability that the next bit of output of some statistical test `A` over the pseudorandom function P<sub>1</sub> equals 1 is close enough to the probability of the same over the random function P<sub>2</sub> as to be negligible. _Less_ than negligible, if we go by the discrete algebra above. The probability may not be exactly 50%, but something negligibly close (49.9999999999999999...%). If the output of a PRG is computationally indistinguishable from the output of a [TRG][] then we consider that the PRG is securely handling the data. The caveat is that the PRG must be "unpredictable" to satisfy the conditions above; that is, that a seed `k` sourced from truly random data and entered into a generating function `G` produces output that looks like random data. This is formally described below:
 
 [TRG]: #TRG
     "truly random generator"
 
-![Lemma showing PRGs are unpredictable](/img/random_pseudorandom/prg_secure.png)
+![Lemma showing PRGs are unpredictable](/assets/img/random_pseudorandom/prg_secure.png)
 
 This states that a key `k` randomly selected from our keyspace `K` and inserted into our PRG `G` produces output with an equal probability of occurring as data randomly selected from a uniform keyspace. If our PRG meets these conditions we consider it "unpredictable."
 

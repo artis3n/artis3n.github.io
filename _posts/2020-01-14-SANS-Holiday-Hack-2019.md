@@ -3,7 +3,7 @@ layout: post
 title: "Writeup: SANS Holiday Hack Challenge 2019"
 description: "A writeup of some of the challenges in this 2D CTF game."
 tags: pentest ctf writeup
-image: /img/kringlecon_2019/kringlecon_logo.png
+image: /assets/img/kringlecon_2019/kringlecon_logo.png
 ---
 
 Lights flashing. The whistle of the wind. It's cold - even inside. You can't avoid that, not up here.
@@ -365,31 +365,31 @@ Thank you to SANS for putting on a great event! See you next year.
 
 [security identifiers]: https://docs.microsoft.com/en-us/windows/win32/secauthz/security-identifiers
 
-[me]: /img/kringlecon_2019/avatar.png
-[santa]: /img/kringlecon_2019/santa_quad.png
-[obj2-redacted]: /img/kringlecon_2019/obj2_letter_redacted.png
-[obj3-event]: /img/kringlecon_2019/obj3_log_event.png
-[obj4-json]: /img/kringlecon_2019/obj4_json.png
-[obj4-lsass]: /img/kringlecon_2019/obj4_lsass.png
-[obj4-3440]: /img/kringlecon_2019/obj4_3440.png
-[obj4-pid-ex]: /img/kringlecon_2019/obj4_pid_example.png
-[obj4-ppid]: /img/kringlecon_2019/obj4_ppid.png
-[obj5-gui]: /img/kringlecon_2019/obj5-rita-gui.png
-[obj5-results]: /img/kringlecon_2019/obj5-rita-results.png
-[obj6-solved]: /img/kringlecon_2019/obj6_solved.png
-[obj6-questions]: /img/kringlecon_2019/obj6-questions-answered.png
-[keypad]: /img/kringlecon_2019/keypad.png
-[keypad-invalid]: /img/kringlecon_2019/keypad-invalid.png
-[keypad-solved]: /img/kringlecon_2019/keypad_solved.png
-[keypad-1337]: /img/kringlecon_2019/keypad-1337.png
-[keypad-7331]: /img/kringlecon_2019/keypad-7331.png
-[notsureif]: /img/kringlecon_2019/notsureif.jpg
-[keypad-wall]: /img/kringlecon_2019/keypad-wall-code.png
-[key-machine]: /img/kringlecon_2019/key-machine.png
-[krampus]: /img/kringlecon_2019/krampus.png
-[krampus key]: /img/kringlecon_2019/krampus-key.png
-[closet passage]: /img/kringlecon_2019/key-closet-unlocked.png
-[danger]: /img/kringlecon_2019/steampipes-danger.png
+[me]: /assets/img/kringlecon_2019/avatar.png
+[santa]: /assets/img/kringlecon_2019/santa_quad.png
+[obj2-redacted]: /assets/img/kringlecon_2019/obj2_letter_redacted.png
+[obj3-event]: /assets/img/kringlecon_2019/obj3_log_event.png
+[obj4-json]: /assets/img/kringlecon_2019/obj4_json.png
+[obj4-lsass]: /assets/img/kringlecon_2019/obj4_lsass.png
+[obj4-3440]: /assets/img/kringlecon_2019/obj4_3440.png
+[obj4-pid-ex]: /assets/img/kringlecon_2019/obj4_pid_example.png
+[obj4-ppid]: /assets/img/kringlecon_2019/obj4_ppid.png
+[obj5-gui]: /assets/img/kringlecon_2019/obj5-rita-gui.png
+[obj5-results]: /assets/img/kringlecon_2019/obj5-rita-results.png
+[obj6-solved]: /assets/img/kringlecon_2019/obj6_solved.png
+[obj6-questions]: /assets/img/kringlecon_2019/obj6-questions-answered.png
+[keypad]: /assets/img/kringlecon_2019/keypad.png
+[keypad-invalid]: /assets/img/kringlecon_2019/keypad-invalid.png
+[keypad-solved]: /assets/img/kringlecon_2019/keypad_solved.png
+[keypad-1337]: /assets/img/kringlecon_2019/keypad-1337.png
+[keypad-7331]: /assets/img/kringlecon_2019/keypad-7331.png
+[notsureif]: /assets/img/kringlecon_2019/notsureif.jpg
+[keypad-wall]: /assets/img/kringlecon_2019/keypad-wall-code.png
+[key-machine]: /assets/img/kringlecon_2019/key-machine.png
+[krampus]: /assets/img/kringlecon_2019/krampus.png
+[krampus key]: /assets/img/kringlecon_2019/krampus-key.png
+[closet passage]: /assets/img/kringlecon_2019/key-closet-unlocked.png
+[danger]: /assets/img/kringlecon_2019/steampipes-danger.png
 
 [rita-github]: https://github.com/activecm/rita
 [rita-docker]: https://github.com/activecm/rita/blob/master/docs/Docker%20Usage.md

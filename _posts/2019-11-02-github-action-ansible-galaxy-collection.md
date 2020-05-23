@@ -524,23 +524,23 @@ I also welcome your input on an [open issue][github_version name] in my collecti
 [collection template]: https://github.com/bcoca/collection
 [on github]: https://github.com/artis3n/github_version-ansible_plugin
 [galaxy.yml metadata]: https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html#collections-galaxy-meta
-[ansible galaxy upload options]: /img/ansible_galaxy_collection/galaxy_upload_options.png
-[api key]: /img/ansible_galaxy_collection/ansible_galaxy_api_key.png
+[ansible galaxy upload options]: /assets/img/ansible_galaxy_collection/galaxy_upload_options.png
+[api key]: /assets/img/ansible_galaxy_collection/ansible_galaxy_api_key.png
 [github action]: https://github.com/features/actions
 [github actions workflow]: https://help.github.com/en/github/automating-your-workflow-with-github-actions
 [github actions syntax]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 [github actions building]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/building-actions
 [action on github]: https://github.com/artis3n/ansible_galaxy_collection
-[github actions name]: /img/ansible_galaxy_collection/github_actions_name.png
+[github actions name]: /assets/img/ansible_galaxy_collection/github_actions_name.png
 [supported OS's]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/virtual-environments-for-github-actions#supported-virtual-environments-and-hardware-resources
 [github learning lab]: https://lab.github.com/github/hello-github-actions!
-[actions upload log]: /img/ansible_galaxy_collection/ansible_galaxy_action_logs.png
+[actions upload log]: /assets/img/ansible_galaxy_collection/ansible_galaxy_action_logs.png
 [actions marketplace]: https://github.com/marketplace/actions/deploy-ansible-galaxy-collection
 [github_version repo]: https://github.com/artis3n/github_version-ansible_plugin
 [github_version galaxy]: https://galaxy.ansible.com/artis3n/github_version
 [github_version name]: https://github.com/artis3n/github_version-ansible_plugin/issues/22
 [github secrets]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables
-[github secrets settings]: /img/ansible_galaxy_collection/github_secrets_settings.png
+[github secrets settings]: /assets/img/ansible_galaxy_collection/github_secrets_settings.png
 [nacl]: https://nacl.cr.yp.to/
 [github actions docker]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/creating-a-docker-container-action
 [github actions javascript]: https://help.github.com/en/github/automating-your-workflow-with-github-actions/creating-a-javascript-action
@@ -549,5 +549,5 @@ I also welcome your input on an [open issue][github_version name] in my collecti
 [core library]: https://github.com/actions/toolkit/tree/master/packages/core
 [actions/exec]: https://github.com/actions/toolkit/tree/master/packages/exec
 [exec output]: https://github.com/actions/toolkit/tree/master/packages/exec#outputoptions
-[publish release]: /img/ansible_galaxy_collection/publish_release.png
+[publish release]: /assets/img/ansible_galaxy_collection/publish_release.png
 [zeit/ncc]: https://github.com/zeit/ncc

@@ -1243,23 +1243,23 @@ I would like to thank Bank of America's Global Information Security Team for put
 [gizmodo newegg processors]: https://gizmodo.com/a-bizarre-story-newegg-fake-core-i7-processors-and-a-5488106
 [ajit reeses]: https://dangerousminds.net/content/uploads/images/_framed/reesssocial-original-600-316.jpg?1513344060
 [trevor]: https://www.csoonline.com/article/3227910/hackers-create-memorial-for-a-cockroach-named-trevor.html
-[trevor google]: /img/derbycon_boa_ctf/osint_google.png
-[trevor twitter]: /img/derbycon_boa_ctf/osint_twitter.png
-[trevor gist]: /img/derbycon_boa_ctf/osint_gist.png
-[trevor github profile]: /img/derbycon_boa_ctf/osint_github_profile.png
-[trevor pastebin]: /img/derbycon_boa_ctf/osint_pastebin.png
-[trevor facebook]: /img/derbycon_boa_ctf/osint_facebook.png
-[nesting output]: /img/derbycon_boa_ctf/nesting_dolls.png
-[nesting flag]: /img/derbycon_boa_ctf/nesting_flag.png
+[trevor google]: /assets/img/derbycon_boa_ctf/osint_google.png
+[trevor twitter]: /assets/img/derbycon_boa_ctf/osint_twitter.png
+[trevor gist]: /assets/img/derbycon_boa_ctf/osint_gist.png
+[trevor github profile]: /assets/img/derbycon_boa_ctf/osint_github_profile.png
+[trevor pastebin]: /assets/img/derbycon_boa_ctf/osint_pastebin.png
+[trevor facebook]: /assets/img/derbycon_boa_ctf/osint_facebook.png
+[nesting output]: /assets/img/derbycon_boa_ctf/nesting_dolls.png
+[nesting flag]: /assets/img/derbycon_boa_ctf/nesting_flag.png
 [gdb]: https://www.gnu.org/software/gdb/
 [binary stackoverflow]: https://reverseengineering.stackexchange.com/a/3816
-[cracking code 1]: /img/derbycon_boa_ctf/cracking_code_1.png
-[cracking code 2]: /img/derbycon_boa_ctf/cracking_code_2.png
-[cracking code 3]: /img/derbycon_boa_ctf/cracking_code_3.png
-[cracking code 4]: /img/derbycon_boa_ctf/cracking_code_4.png
-[challenge 3]: /img/derbycon_boa_ctf/Challenge_3.png
-[challenge 3 transparent]: /img/derbycon_boa_ctf/Challenge_3_transparent.png
-[challenge 3 enhanced]: /img/derbycon_boa_ctf/Challenge_3_enhance.png
+[cracking code 1]: /assets/img/derbycon_boa_ctf/cracking_code_1.png
+[cracking code 2]: /assets/img/derbycon_boa_ctf/cracking_code_2.png
+[cracking code 3]: /assets/img/derbycon_boa_ctf/cracking_code_3.png
+[cracking code 4]: /assets/img/derbycon_boa_ctf/cracking_code_4.png
+[challenge 3]: /assets/img/derbycon_boa_ctf/Challenge_3.png
+[challenge 3 transparent]: /assets/img/derbycon_boa_ctf/Challenge_3_transparent.png
+[challenge 3 enhanced]: /assets/img/derbycon_boa_ctf/Challenge_3_enhance.png
 [hackercat]: https://media.giphy.com/media/heIX5HfWgEYlW/giphy.gif
 [hashcat]: https://github.com/hashcat/hashcat
 [crack encrypted zip]: https://penguin-systems.com/node/10
@@ -1267,7 +1267,7 @@ I would like to thank Bank of America's Global Information Security Team for put
 [john install]: https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/doc/INSTALL
 [seclists]: https://github.com/danielmiessler/SecLists
 [quipqiup]: https://quipqiup.com/
-[cryptogram]: /img/derbycon_boa_ctf/cryptogram.png
+[cryptogram]: /assets/img/derbycon_boa_ctf/cryptogram.png
 [rtfm]: https://github.com/tanc7/hacking-books/blob/master/RTFM%20-%20Red%20Team%20Field%20Manual%20v3.pdf
 [volatility]: https://github.com/volatilityfoundation/volatility
 [volatility basics]: https://samsclass.info/121/proj/p4-Volatility.htm
@@ -1279,16 +1279,16 @@ I would like to thank Bank of America's Global Information Security Team for put
 [printkey]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#printkey
 [pslist]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#pslist
 [netscan]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#netscan
-[volatility hashdump hashes]: /img/derbycon_boa_ctf/volatility_hashdump_hashcat_2.png
+[volatility hashdump hashes]: /assets/img/derbycon_boa_ctf/volatility_hashdump_hashcat_2.png
 [ntlm bad]: https://medium.com/@petergombos/lm-ntlm-net-ntlmv2-oh-my-a9b235c58ed4
-[ctfadmin hash]: /img/derbycon_boa_ctf/hashcat_ctfadmin.png
+[ctfadmin hash]: /assets/img/derbycon_boa_ctf/hashcat_ctfadmin.png
 [hashcat potfile]: https://hashcat.net/wiki/doku.php?id=frequently_asked_questions#what_is_a_potfile
-[volatility pslist]: /img/derbycon_boa_ctf/volatility_pslist.png
+[volatility pslist]: /assets/img/derbycon_boa_ctf/volatility_pslist.png
 [volatility networking]: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#networking
-[volatility netscan]: /img/derbycon_boa_ctf/volatility_netscan.png
+[volatility netscan]: /assets/img/derbycon_boa_ctf/volatility_netscan.png
 [binwalk]: https://github.com/ReFirmLabs/binwalk
-[binwalk command]: /img/derbycon_boa_ctf/binwalk.png
-[binwalk extracted]: /img/derbycon_boa_ctf/binwalk_extracted.png
-[firmware cracked grep]: /img/derbycon_boa_ctf/firmware_cracked_grep.png
+[binwalk command]: /assets/img/derbycon_boa_ctf/binwalk.png
+[binwalk extracted]: /assets/img/derbycon_boa_ctf/binwalk_extracted.png
+[firmware cracked grep]: /assets/img/derbycon_boa_ctf/firmware_cracked_grep.png
 [netcat]: https://null-byte.wonderhowto.com/how-to/hack-like-pro-use-netcat-swiss-army-knife-hacking-tools-0148657/
-[not sure if]: /img/derbycon_boa_ctf/notsureif.jpg
+[not sure if]: /assets/img/derbycon_boa_ctf/notsureif.jpg
