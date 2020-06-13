@@ -10,3 +10,9 @@ ehthumbs.db
 
 .idea
 .jekyll-metadata
+
+# Unreleased HTB
+assets/img/htb/sauna
+assets/img/htb/traceback
+assets/img/htb/remote
+assets/img/htb/blunder
