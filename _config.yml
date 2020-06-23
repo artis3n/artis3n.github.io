@@ -43,7 +43,7 @@ round-avatar: true
 # Web Monetization
 # More info: https://webmonetization.org/
 # Get Started guide: https://dev.to/hacksultan/web-monetization-like-i-m-5-1418
-monetization: "$pay.stronghold.co/1a1f328bd64525a4c6482e8d3b420500aa5"
+# monetization: ""
 
 # --- Footer options --- #
 
