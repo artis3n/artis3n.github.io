@@ -16,6 +16,10 @@ update:
 local: clean
 	bundle exec jekyll serve --drafts --incremental
 
+.PHONY: posts
+posts: clean
+	bundle exec jekyll server --incremental
+
 .PHONY: clean
 clean:
 	bundle exec jekyll clean
