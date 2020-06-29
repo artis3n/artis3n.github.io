@@ -12,7 +12,7 @@ This series will follow my exercises in [HackTheBox][]. All published writeups a
 
 _<small>Difficulty: Easy</small>_
 
-_<small>Machine IP: 10.10.10.29</small>_
+_<small>Machine IP: 10.10.10.111</small>_
 
 I start off, as always, with a couple of port scans.
 
