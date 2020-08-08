@@ -22,9 +22,9 @@ author: Artis3n
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Topics: "/tags"
+  Article Archive: "/tags"
   About Me: "aboutme"
-  Author's home: "https://dev.to/artis3n"
+#  Author's home: "https://dev.to/artis3n"
 # --- Logo --- #
 
 # Image to show in the navigation bar - works best with a square image
