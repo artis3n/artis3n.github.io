@@ -6,16 +6,6 @@ title: Artis3nal Mistakes
 # Short description of your site
 description: Thoughts on software development, application security, and cryptography.
 
-# --- Local development options ---
-# If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
-# *** If you're not sure what this mean, then leave this section as it is. Only modify the url and baseurl if you know what you're doing!***
-
-# url is the the website domain URL without a trailing slash
-url: "https://blog.artis3nal.com"
-
-# baseurl should be an empty string
-baseurl: ""
-
 # Your name to show in the footer
 author: Artis3n
 
@@ -36,14 +26,6 @@ round-avatar: true
 # If you want to have an image logo in the top-left corner instead of the title text,
 # then specify the following parameter
 #title-img: /path/to/image
-
-# -- Header options -- #
-# Uncomment the attributes you want to enable for your site.
-
-# Web Monetization
-# More info: https://webmonetization.org/
-# Get Started guide: https://dev.to/hacksultan/web-monetization-like-i-m-5-1418
-# monetization: ""
 
 # --- Footer options --- #
 
@@ -70,6 +52,9 @@ social-network-links:
 #  yelp: yourname
 #  telegram: yourname
 #  calendly: yourname
+#  mastodon: instance.url/@username
+#  ORCID: your ORCID ID
+#  google-scholar: your google scholar
 
 # --- General options --- #
 
@@ -78,6 +63,7 @@ share-links-active:
   twitter: true
   facebook: false
   linkedin: true
+  vk: false
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
