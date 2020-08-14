@@ -12,7 +12,6 @@ ehthumbs.db
 .jekyll-metadata
 
 # Unreleased HTB
-assets/img/htb/sauna
 assets/img/htb/traceback
 assets/img/htb/remote
 assets/img/htb/blunder
@@ -22,3 +21,4 @@ _drafts/htb-magic-msf.md
 # Ignore these for now
 assets/img/htb/bounty
 assets/img/htb/solidstate
+assets/img/htb/sauna
