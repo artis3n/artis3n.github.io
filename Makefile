@@ -18,7 +18,7 @@ local: clean
 
 .PHONY: posts
 posts: clean
-	bundle exec jekyll server --incremental
+	bundle exec jekyll serve --incremental
 
 .PHONY: clean
 clean:
