@@ -455,7 +455,7 @@ HOWEVER!
 Inspecting this output, I notice that the memory addresses stay relatively the same.
 They generally all begin with `0xb75`, some with `0xb76`.
 They all end in `000`.
-Really, only the single byte in the middle is changing each time.
+Really, only the two bytes in the middle are changing each time.
 This means there are 512 possibilities for `libc`'s address in each invocation.
 In other words, I have a 1/512 chance of _guessing_ `libc`'s memory address each time I invoke the executable.
 If I exploit the binary 513 times, there is an extremely high chance that I will see one of these addresses again.
